@@ -223,5 +223,9 @@ def main():
 if __name__ == "__main__":
     main()
 
+# Pip Intalls:
+# pip install pillow numpy scikit-learn webcolors==24.11.1
+
 # Example usage:
-# python cmyk_tool.py --image .\assets\Wanderer.png --scale 16 32 --approx-method kmeans --n-colors 32 --reconstruct --index-map
+# python cmyk_tool.py --image .\Wanderer\Wanderer.png --scale 16 32 --approx-method kmeans --n-colors 32 --reconstruct --index-map
+# python cmyk_tool.py --image .\SkullsAndRoses\SkullsAndRoses.png --scale 16 32 --approx-method kmeans --n-colors 32 --reconstruct --index-map
