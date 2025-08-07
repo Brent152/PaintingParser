@@ -229,3 +229,4 @@ if __name__ == "__main__":
 # Example usage:
 # python cmyk_tool.py --image .\Wanderer\Wanderer.png --scale 16 32 --approx-method kmeans --n-colors 32 --reconstruct --index-map
 # python cmyk_tool.py --image .\SkullsAndRoses\SkullsAndRoses.png --scale 16 32 --approx-method kmeans --n-colors 32 --reconstruct --index-map
+# python cmyk_tool.py --image .\sam\sam.png --scale 512 512 --approx-method kmeans --n-colors 32 --reconstruct --index-map
