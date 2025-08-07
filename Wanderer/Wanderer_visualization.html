@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CMYK Index Map Visualization</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .grid { display: inline-block; border: 2px solid black; }
+        .cell { 
+            width: 25px; height: 25px; 
+            display: inline-block; 
+            border: 1px solid #ccc;
+            text-align: center;
+            font-size: 10px;
+            line-height: 25px;
+            color: white;
+            text-shadow: 1px 1px 1px black;
+        }
+        .legend { margin-top: 20px; }
+        .legend-item { 
+            display: inline-block; 
+            margin: 5px; 
+            padding: 5px; 
+            border: 1px solid black;
+            vertical-align: top;
+        }
+        .color-square { 
+            width: 30px; height: 30px; 
+            display: inline-block; 
+            margin-right: 10px;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <h1>CMYK Index Map Visualization</h1>
+    
+    <h2>Color Grid</h2>
+    <div class="grid">
+        <div>
+            <div class="cell" style="background-color: rgb(133,67,65);" title="Index 0: sienna - C:0.000 M:0.496 Y:0.504 K:0.478">0</div>
+            <div class="cell" style="background-color: rgb(133,67,65);" title="Index 0: sienna - C:0.000 M:0.496 Y:0.504 K:0.478">0</div>
+            <div class="cell" style="background-color: rgb(133,67,65);" title="Index 0: sienna - C:0.000 M:0.496 Y:0.504 K:0.478">0</div>
+            <div class="cell" style="background-color: rgb(106,46,47);" title="Index 1: saddlebrown - C:0.000 M:0.566 Y:0.557 K:0.584">1</div>
+            <div class="cell" style="background-color: rgb(86,38,34);" title="Index 2: saddlebrown - C:0.000 M:0.558 Y:0.605 K:0.663">2</div>
+            <div class="cell" style="background-color: rgb(86,38,34);" title="Index 2: saddlebrown - C:0.000 M:0.558 Y:0.605 K:0.663">2</div>
+            <div class="cell" style="background-color: rgb(86,38,34);" title="Index 2: saddlebrown - C:0.000 M:0.558 Y:0.605 K:0.663">2</div>
+            <div class="cell" style="background-color: rgb(86,38,34);" title="Index 2: saddlebrown - C:0.000 M:0.558 Y:0.605 K:0.663">2</div>
+            <div class="cell" style="background-color: rgb(86,38,34);" title="Index 2: saddlebrown - C:0.000 M:0.558 Y:0.605 K:0.663">2</div>
+            <div class="cell" style="background-color: rgb(86,38,34);" title="Index 2: saddlebrown - C:0.000 M:0.558 Y:0.605 K:0.663">2</div>
+            <div class="cell" style="background-color: rgb(106,46,47);" title="Index 1: saddlebrown - C:0.000 M:0.566 Y:0.557 K:0.584">1</div>
+            <div class="cell" style="background-color: rgb(106,46,47);" title="Index 1: saddlebrown - C:0.000 M:0.566 Y:0.557 K:0.584">1</div>
+            <div class="cell" style="background-color: rgb(106,46,47);" title="Index 1: saddlebrown - C:0.000 M:0.566 Y:0.557 K:0.584">1</div>
+            <div class="cell" style="background-color: rgb(120,55,58);" title="Index 3: saddlebrown - C:0.000 M:0.537 Y:0.512 K:0.525">3</div>
+            <div class="cell" style="background-color: rgb(133,67,65);" title="Index 0: sienna - C:0.000 M:0.496 Y:0.504 K:0.478">0</div>
+            <div class="cell" style="background-color: rgb(133,67,65);" title="Index 0: sienna - C:0.000 M:0.496 Y:0.504 K:0.478">0</div>
+        </div>
+        <div>
+            <div class="cell" style="background-color: rgb(133,67,65);" title="Index 0: sienna - C:0.000 M:0.496 Y:0.504 K:0.478">0</div>
+            <div class="cell" style="background-color: rgb(250,200,156);" title="Index 4: navajowhite - C:0.000 M:0.200 Y:0.376 K:0.020">4</div>
+            <div class="cell" style="background-color: rgb(250,200,156);" title="Index 4: navajowhite - C:0.000 M:0.200 Y:0.376 K:0.020">4</div>
+            <div class="cell" style="background-color: rgb(250,200,156);" title="Index 4: navajowhite - C:0.000 M:0.200 Y:0.376 K:0.020">4</div>
+            <div class="cell" style="background-color: rgb(251,209,171);" title="Index 5: navajowhite - C:0.000 M:0.171 Y:0.318 K:0.012">5</div>
+            <div class="cell" style="background-color: rgb(251,209,171);" title="Index 5: navajowhite - C:0.000 M:0.171 Y:0.318 K:0.012">5</div>
+            <div class="cell" style="background-color: rgb(251,209,171);" title="Index 5: navajowhite - C:0.000 M:0.171 Y:0.318 K:0.012">5</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(133,67,65);" title="Index 0: sienna - C:0.000 M:0.496 Y:0.504 K:0.478">0</div>
+        </div>
+        <div>
+            <div class="cell" style="background-color: rgb(86,38,34);" title="Index 2: saddlebrown - C:0.000 M:0.558 Y:0.605 K:0.663">2</div>
+            <div class="cell" style="background-color: rgb(250,200,156);" title="Index 4: navajowhite - C:0.000 M:0.200 Y:0.376 K:0.020">4</div>
+            <div class="cell" style="background-color: rgb(250,200,156);" title="Index 4: navajowhite - C:0.000 M:0.200 Y:0.376 K:0.020">4</div>
+            <div class="cell" style="background-color: rgb(250,200,156);" title="Index 4: navajowhite - C:0.000 M:0.200 Y:0.376 K:0.020">4</div>
+            <div class="cell" style="background-color: rgb(251,209,171);" title="Index 5: navajowhite - C:0.000 M:0.171 Y:0.318 K:0.012">5</div>
+            <div class="cell" style="background-color: rgb(251,209,171);" title="Index 5: navajowhite - C:0.000 M:0.171 Y:0.318 K:0.012">5</div>
+            <div class="cell" style="background-color: rgb(251,209,171);" title="Index 5: navajowhite - C:0.000 M:0.171 Y:0.318 K:0.012">5</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(120,55,58);" title="Index 3: saddlebrown - C:0.000 M:0.537 Y:0.512 K:0.525">3</div>
+        </div>
+        <div>
+            <div class="cell" style="background-color: rgb(106,46,47);" title="Index 1: saddlebrown - C:0.000 M:0.566 Y:0.557 K:0.584">1</div>
+            <div class="cell" style="background-color: rgb(250,200,156);" title="Index 4: navajowhite - C:0.000 M:0.200 Y:0.376 K:0.020">4</div>
+            <div class="cell" style="background-color: rgb(250,200,156);" title="Index 4: navajowhite - C:0.000 M:0.200 Y:0.376 K:0.020">4</div>
+            <div class="cell" style="background-color: rgb(250,200,156);" title="Index 4: navajowhite - C:0.000 M:0.200 Y:0.376 K:0.020">4</div>
+            <div class="cell" style="background-color: rgb(250,200,156);" title="Index 4: navajowhite - C:0.000 M:0.200 Y:0.376 K:0.020">4</div>
+            <div class="cell" style="background-color: rgb(251,209,171);" title="Index 5: navajowhite - C:0.000 M:0.171 Y:0.318 K:0.012">5</div>
+            <div class="cell" style="background-color: rgb(250,200,156);" title="Index 4: navajowhite - C:0.000 M:0.200 Y:0.376 K:0.020">4</div>
+            <div class="cell" style="background-color: rgb(228,152,92);" title="Index 7: sandybrown - C:0.000 M:0.332 Y:0.594 K:0.102">7</div>
+            <div class="cell" style="background-color: rgb(232,181,140);" title="Index 8: burlywood - C:0.000 M:0.219 Y:0.399 K:0.086">8</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(133,67,65);" title="Index 0: sienna - C:0.000 M:0.496 Y:0.504 K:0.478">0</div>
+        </div>
+        <div>
+            <div class="cell" style="background-color: rgb(106,46,47);" title="Index 1: saddlebrown - C:0.000 M:0.566 Y:0.557 K:0.584">1</div>
+            <div class="cell" style="background-color: rgb(250,200,156);" title="Index 4: navajowhite - C:0.000 M:0.200 Y:0.376 K:0.020">4</div>
+            <div class="cell" style="background-color: rgb(250,200,156);" title="Index 4: navajowhite - C:0.000 M:0.200 Y:0.376 K:0.020">4</div>
+            <div class="cell" style="background-color: rgb(250,200,156);" title="Index 4: navajowhite - C:0.000 M:0.200 Y:0.376 K:0.020">4</div>
+            <div class="cell" style="background-color: rgb(250,200,156);" title="Index 4: navajowhite - C:0.000 M:0.200 Y:0.376 K:0.020">4</div>
+            <div class="cell" style="background-color: rgb(251,209,171);" title="Index 5: navajowhite - C:0.000 M:0.171 Y:0.318 K:0.012">5</div>
+            <div class="cell" style="background-color: rgb(228,152,92);" title="Index 7: sandybrown - C:0.000 M:0.332 Y:0.594 K:0.102">7</div>
+            <div class="cell" style="background-color: rgb(176,76,0);" title="Index 9: saddlebrown - C:0.000 M:0.571 Y:1.000 K:0.306">9</div>
+            <div class="cell" style="background-color: rgb(208,118,51);" title="Index 10: peru - C:0.000 M:0.428 Y:0.755 K:0.184">10</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(133,67,65);" title="Index 0: sienna - C:0.000 M:0.496 Y:0.504 K:0.478">0</div>
+        </div>
+        <div>
+            <div class="cell" style="background-color: rgb(106,46,47);" title="Index 1: saddlebrown - C:0.000 M:0.566 Y:0.557 K:0.584">1</div>
+            <div class="cell" style="background-color: rgb(251,209,171);" title="Index 5: navajowhite - C:0.000 M:0.171 Y:0.318 K:0.012">5</div>
+            <div class="cell" style="background-color: rgb(251,209,171);" title="Index 5: navajowhite - C:0.000 M:0.171 Y:0.318 K:0.012">5</div>
+            <div class="cell" style="background-color: rgb(251,209,171);" title="Index 5: navajowhite - C:0.000 M:0.171 Y:0.318 K:0.012">5</div>
+            <div class="cell" style="background-color: rgb(251,209,171);" title="Index 5: navajowhite - C:0.000 M:0.171 Y:0.318 K:0.012">5</div>
+            <div class="cell" style="background-color: rgb(251,209,171);" title="Index 5: navajowhite - C:0.000 M:0.171 Y:0.318 K:0.012">5</div>
+            <div class="cell" style="background-color: rgb(232,181,140);" title="Index 8: burlywood - C:0.000 M:0.219 Y:0.399 K:0.086">8</div>
+            <div class="cell" style="background-color: rgb(208,118,51);" title="Index 10: peru - C:0.000 M:0.428 Y:0.755 K:0.184">10</div>
+            <div class="cell" style="background-color: rgb(228,152,92);" title="Index 7: sandybrown - C:0.000 M:0.332 Y:0.594 K:0.102">7</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(133,67,65);" title="Index 0: sienna - C:0.000 M:0.496 Y:0.504 K:0.478">0</div>
+        </div>
+        <div>
+            <div class="cell" style="background-color: rgb(120,55,58);" title="Index 3: saddlebrown - C:0.000 M:0.537 Y:0.512 K:0.525">3</div>
+            <div class="cell" style="background-color: rgb(251,209,171);" title="Index 5: navajowhite - C:0.000 M:0.171 Y:0.318 K:0.012">5</div>
+            <div class="cell" style="background-color: rgb(251,209,171);" title="Index 5: navajowhite - C:0.000 M:0.171 Y:0.318 K:0.012">5</div>
+            <div class="cell" style="background-color: rgb(251,209,171);" title="Index 5: navajowhite - C:0.000 M:0.171 Y:0.318 K:0.012">5</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(232,181,140);" title="Index 8: burlywood - C:0.000 M:0.219 Y:0.399 K:0.086">8</div>
+            <div class="cell" style="background-color: rgb(116,70,53);" title="Index 12: saddlebrown - C:0.000 M:0.393 Y:0.538 K:0.541">12</div>
+            <div class="cell" style="background-color: rgb(172,142,114);" title="Index 13: rosybrown - C:0.000 M:0.173 Y:0.341 K:0.322">13</div>
+            <div class="cell" style="background-color: rgb(255,228,200);" title="Index 14: bisque - C:0.000 M:0.102 Y:0.212 K:0.000">14</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(133,67,65);" title="Index 0: sienna - C:0.000 M:0.496 Y:0.504 K:0.478">0</div>
+        </div>
+        <div>
+            <div class="cell" style="background-color: rgb(106,46,47);" title="Index 1: saddlebrown - C:0.000 M:0.566 Y:0.557 K:0.584">1</div>
+            <div class="cell" style="background-color: rgb(251,209,171);" title="Index 5: navajowhite - C:0.000 M:0.171 Y:0.318 K:0.012">5</div>
+            <div class="cell" style="background-color: rgb(251,209,171);" title="Index 5: navajowhite - C:0.000 M:0.171 Y:0.318 K:0.012">5</div>
+            <div class="cell" style="background-color: rgb(251,209,171);" title="Index 5: navajowhite - C:0.000 M:0.171 Y:0.318 K:0.012">5</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(172,142,114);" title="Index 13: rosybrown - C:0.000 M:0.173 Y:0.341 K:0.322">13</div>
+            <div class="cell" style="background-color: rgb(82,71,56);" title="Index 15: darkolivegreen - C:0.000 M:0.134 Y:0.317 K:0.678">15</div>
+            <div class="cell" style="background-color: rgb(46,40,31);" title="Index 16: darkslategray - C:0.000 M:0.128 Y:0.319 K:0.816">16</div>
+            <div class="cell" style="background-color: rgb(46,40,31);" title="Index 16: darkslategray - C:0.000 M:0.128 Y:0.319 K:0.816">16</div>
+            <div class="cell" style="background-color: rgb(115,98,82);" title="Index 17: dimgray - C:0.000 M:0.147 Y:0.284 K:0.545">17</div>
+            <div class="cell" style="background-color: rgb(228,195,174);" title="Index 18: wheat - C:0.000 M:0.144 Y:0.236 K:0.102">18</div>
+            <div class="cell" style="background-color: rgb(255,228,200);" title="Index 14: bisque - C:0.000 M:0.102 Y:0.212 K:0.000">14</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(133,67,65);" title="Index 0: sienna - C:0.000 M:0.496 Y:0.504 K:0.478">0</div>
+        </div>
+        <div>
+            <div class="cell" style="background-color: rgb(120,55,58);" title="Index 3: saddlebrown - C:0.000 M:0.537 Y:0.512 K:0.525">3</div>
+            <div class="cell" style="background-color: rgb(251,209,171);" title="Index 5: navajowhite - C:0.000 M:0.171 Y:0.318 K:0.012">5</div>
+            <div class="cell" style="background-color: rgb(251,209,171);" title="Index 5: navajowhite - C:0.000 M:0.171 Y:0.318 K:0.012">5</div>
+            <div class="cell" style="background-color: rgb(251,209,171);" title="Index 5: navajowhite - C:0.000 M:0.171 Y:0.318 K:0.012">5</div>
+            <div class="cell" style="background-color: rgb(250,200,156);" title="Index 4: navajowhite - C:0.000 M:0.200 Y:0.376 K:0.020">4</div>
+            <div class="cell" style="background-color: rgb(46,40,31);" title="Index 16: darkslategray - C:0.000 M:0.128 Y:0.319 K:0.816">16</div>
+            <div class="cell" style="background-color: rgb(32,30,23);" title="Index 19: black - C:0.000 M:0.062 Y:0.281 K:0.875">19</div>
+            <div class="cell" style="background-color: rgb(64,54,38);" title="Index 20: darkslategray - C:0.000 M:0.169 Y:0.400 K:0.745">20</div>
+            <div class="cell" style="background-color: rgb(64,54,38);" title="Index 20: darkslategray - C:0.000 M:0.169 Y:0.400 K:0.745">20</div>
+            <div class="cell" style="background-color: rgb(17,18,11);" title="Index 21: black - C:0.053 M:0.000 Y:0.368 K:0.925">21</div>
+            <div class="cell" style="background-color: rgb(115,98,82);" title="Index 17: dimgray - C:0.000 M:0.147 Y:0.284 K:0.545">17</div>
+            <div class="cell" style="background-color: rgb(255,228,200);" title="Index 14: bisque - C:0.000 M:0.102 Y:0.212 K:0.000">14</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(133,67,65);" title="Index 0: sienna - C:0.000 M:0.496 Y:0.504 K:0.478">0</div>
+        </div>
+        <div>
+            <div class="cell" style="background-color: rgb(133,67,65);" title="Index 0: sienna - C:0.000 M:0.496 Y:0.504 K:0.478">0</div>
+            <div class="cell" style="background-color: rgb(251,209,171);" title="Index 5: navajowhite - C:0.000 M:0.171 Y:0.318 K:0.012">5</div>
+            <div class="cell" style="background-color: rgb(251,209,171);" title="Index 5: navajowhite - C:0.000 M:0.171 Y:0.318 K:0.012">5</div>
+            <div class="cell" style="background-color: rgb(251,209,171);" title="Index 5: navajowhite - C:0.000 M:0.171 Y:0.318 K:0.012">5</div>
+            <div class="cell" style="background-color: rgb(250,200,156);" title="Index 4: navajowhite - C:0.000 M:0.200 Y:0.376 K:0.020">4</div>
+            <div class="cell" style="background-color: rgb(46,40,31);" title="Index 16: darkslategray - C:0.000 M:0.128 Y:0.319 K:0.816">16</div>
+            <div class="cell" style="background-color: rgb(32,30,23);" title="Index 19: black - C:0.000 M:0.062 Y:0.281 K:0.875">19</div>
+            <div class="cell" style="background-color: rgb(46,40,31);" title="Index 16: darkslategray - C:0.000 M:0.128 Y:0.319 K:0.816">16</div>
+            <div class="cell" style="background-color: rgb(64,54,38);" title="Index 20: darkslategray - C:0.000 M:0.169 Y:0.400 K:0.745">20</div>
+            <div class="cell" style="background-color: rgb(32,30,23);" title="Index 19: black - C:0.000 M:0.062 Y:0.281 K:0.875">19</div>
+            <div class="cell" style="background-color: rgb(46,40,31);" title="Index 16: darkslategray - C:0.000 M:0.128 Y:0.319 K:0.816">16</div>
+            <div class="cell" style="background-color: rgb(228,195,174);" title="Index 18: wheat - C:0.000 M:0.144 Y:0.236 K:0.102">18</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(133,67,65);" title="Index 0: sienna - C:0.000 M:0.496 Y:0.504 K:0.478">0</div>
+        </div>
+        <div>
+            <div class="cell" style="background-color: rgb(133,67,65);" title="Index 0: sienna - C:0.000 M:0.496 Y:0.504 K:0.478">0</div>
+            <div class="cell" style="background-color: rgb(251,209,171);" title="Index 5: navajowhite - C:0.000 M:0.171 Y:0.318 K:0.012">5</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(232,181,140);" title="Index 8: burlywood - C:0.000 M:0.219 Y:0.399 K:0.086">8</div>
+            <div class="cell" style="background-color: rgb(46,40,31);" title="Index 16: darkslategray - C:0.000 M:0.128 Y:0.319 K:0.816">16</div>
+            <div class="cell" style="background-color: rgb(32,30,23);" title="Index 19: black - C:0.000 M:0.062 Y:0.281 K:0.875">19</div>
+            <div class="cell" style="background-color: rgb(46,40,31);" title="Index 16: darkslategray - C:0.000 M:0.128 Y:0.319 K:0.816">16</div>
+            <div class="cell" style="background-color: rgb(46,40,31);" title="Index 16: darkslategray - C:0.000 M:0.128 Y:0.319 K:0.816">16</div>
+            <div class="cell" style="background-color: rgb(46,40,31);" title="Index 16: darkslategray - C:0.000 M:0.128 Y:0.319 K:0.816">16</div>
+            <div class="cell" style="background-color: rgb(17,18,11);" title="Index 21: black - C:0.053 M:0.000 Y:0.368 K:0.925">21</div>
+            <div class="cell" style="background-color: rgb(180,156,138);" title="Index 22: rosybrown - C:0.000 M:0.133 Y:0.233 K:0.294">22</div>
+            <div class="cell" style="background-color: rgb(255,228,200);" title="Index 14: bisque - C:0.000 M:0.102 Y:0.212 K:0.000">14</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(133,67,65);" title="Index 0: sienna - C:0.000 M:0.496 Y:0.504 K:0.478">0</div>
+        </div>
+        <div>
+            <div class="cell" style="background-color: rgb(133,67,65);" title="Index 0: sienna - C:0.000 M:0.496 Y:0.504 K:0.478">0</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(180,156,138);" title="Index 22: rosybrown - C:0.000 M:0.133 Y:0.233 K:0.294">22</div>
+            <div class="cell" style="background-color: rgb(17,18,11);" title="Index 21: black - C:0.053 M:0.000 Y:0.368 K:0.925">21</div>
+            <div class="cell" style="background-color: rgb(32,30,23);" title="Index 19: black - C:0.000 M:0.062 Y:0.281 K:0.875">19</div>
+            <div class="cell" style="background-color: rgb(46,40,31);" title="Index 16: darkslategray - C:0.000 M:0.128 Y:0.319 K:0.816">16</div>
+            <div class="cell" style="background-color: rgb(32,30,23);" title="Index 19: black - C:0.000 M:0.062 Y:0.281 K:0.875">19</div>
+            <div class="cell" style="background-color: rgb(115,98,82);" title="Index 17: dimgray - C:0.000 M:0.147 Y:0.284 K:0.545">17</div>
+            <div class="cell" style="background-color: rgb(64,54,38);" title="Index 20: darkslategray - C:0.000 M:0.169 Y:0.400 K:0.745">20</div>
+            <div class="cell" style="background-color: rgb(115,98,82);" title="Index 17: dimgray - C:0.000 M:0.147 Y:0.284 K:0.545">17</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(133,67,65);" title="Index 0: sienna - C:0.000 M:0.496 Y:0.504 K:0.478">0</div>
+        </div>
+        <div>
+            <div class="cell" style="background-color: rgb(106,46,47);" title="Index 1: saddlebrown - C:0.000 M:0.566 Y:0.557 K:0.584">1</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(255,228,200);" title="Index 14: bisque - C:0.000 M:0.102 Y:0.212 K:0.000">14</div>
+            <div class="cell" style="background-color: rgb(172,142,114);" title="Index 13: rosybrown - C:0.000 M:0.173 Y:0.341 K:0.322">13</div>
+            <div class="cell" style="background-color: rgb(5,8,2);" title="Index 23: black - C:0.375 M:0.000 Y:0.750 K:0.969">23</div>
+            <div class="cell" style="background-color: rgb(32,30,23);" title="Index 19: black - C:0.000 M:0.062 Y:0.281 K:0.875">19</div>
+            <div class="cell" style="background-color: rgb(46,40,31);" title="Index 16: darkslategray - C:0.000 M:0.128 Y:0.319 K:0.816">16</div>
+            <div class="cell" style="background-color: rgb(32,30,23);" title="Index 19: black - C:0.000 M:0.062 Y:0.281 K:0.875">19</div>
+            <div class="cell" style="background-color: rgb(157,133,109);" title="Index 24: gray - C:0.000 M:0.158 Y:0.304 K:0.380">24</div>
+            <div class="cell" style="background-color: rgb(157,133,109);" title="Index 24: gray - C:0.000 M:0.158 Y:0.304 K:0.380">24</div>
+            <div class="cell" style="background-color: rgb(46,40,31);" title="Index 16: darkslategray - C:0.000 M:0.128 Y:0.319 K:0.816">16</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(120,55,58);" title="Index 3: saddlebrown - C:0.000 M:0.537 Y:0.512 K:0.525">3</div>
+        </div>
+        <div>
+            <div class="cell" style="background-color: rgb(116,70,53);" title="Index 12: saddlebrown - C:0.000 M:0.393 Y:0.538 K:0.541">12</div>
+            <div class="cell" style="background-color: rgb(251,209,171);" title="Index 5: navajowhite - C:0.000 M:0.171 Y:0.318 K:0.012">5</div>
+            <div class="cell" style="background-color: rgb(251,209,171);" title="Index 5: navajowhite - C:0.000 M:0.171 Y:0.318 K:0.012">5</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(143,117,89);" title="Index 25: gray - C:0.000 M:0.181 Y:0.375 K:0.435">25</div>
+            <div class="cell" style="background-color: rgb(5,8,2);" title="Index 23: black - C:0.375 M:0.000 Y:0.750 K:0.969">23</div>
+            <div class="cell" style="background-color: rgb(32,30,23);" title="Index 19: black - C:0.000 M:0.062 Y:0.281 K:0.875">19</div>
+            <div class="cell" style="background-color: rgb(46,40,31);" title="Index 16: darkslategray - C:0.000 M:0.128 Y:0.319 K:0.816">16</div>
+            <div class="cell" style="background-color: rgb(32,30,23);" title="Index 19: black - C:0.000 M:0.062 Y:0.281 K:0.875">19</div>
+            <div class="cell" style="background-color: rgb(82,71,56);" title="Index 15: darkolivegreen - C:0.000 M:0.134 Y:0.317 K:0.678">15</div>
+            <div class="cell" style="background-color: rgb(82,71,56);" title="Index 15: darkolivegreen - C:0.000 M:0.134 Y:0.317 K:0.678">15</div>
+            <div class="cell" style="background-color: rgb(82,71,56);" title="Index 15: darkolivegreen - C:0.000 M:0.134 Y:0.317 K:0.678">15</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(116,70,53);" title="Index 12: saddlebrown - C:0.000 M:0.393 Y:0.538 K:0.541">12</div>
+        </div>
+        <div>
+            <div class="cell" style="background-color: rgb(116,70,53);" title="Index 12: saddlebrown - C:0.000 M:0.393 Y:0.538 K:0.541">12</div>
+            <div class="cell" style="background-color: rgb(251,209,171);" title="Index 5: navajowhite - C:0.000 M:0.171 Y:0.318 K:0.012">5</div>
+            <div class="cell" style="background-color: rgb(251,209,171);" title="Index 5: navajowhite - C:0.000 M:0.171 Y:0.318 K:0.012">5</div>
+            <div class="cell" style="background-color: rgb(251,209,171);" title="Index 5: navajowhite - C:0.000 M:0.171 Y:0.318 K:0.012">5</div>
+            <div class="cell" style="background-color: rgb(143,117,89);" title="Index 25: gray - C:0.000 M:0.181 Y:0.375 K:0.435">25</div>
+            <div class="cell" style="background-color: rgb(17,18,11);" title="Index 21: black - C:0.053 M:0.000 Y:0.368 K:0.925">21</div>
+            <div class="cell" style="background-color: rgb(46,40,31);" title="Index 16: darkslategray - C:0.000 M:0.128 Y:0.319 K:0.816">16</div>
+            <div class="cell" style="background-color: rgb(46,40,31);" title="Index 16: darkslategray - C:0.000 M:0.128 Y:0.319 K:0.816">16</div>
+            <div class="cell" style="background-color: rgb(32,30,23);" title="Index 19: black - C:0.000 M:0.062 Y:0.281 K:0.875">19</div>
+            <div class="cell" style="background-color: rgb(17,18,11);" title="Index 21: black - C:0.053 M:0.000 Y:0.368 K:0.925">21</div>
+            <div class="cell" style="background-color: rgb(32,30,23);" title="Index 19: black - C:0.000 M:0.062 Y:0.281 K:0.875">19</div>
+            <div class="cell" style="background-color: rgb(213,182,157);" title="Index 26: tan - C:0.000 M:0.149 Y:0.262 K:0.161">26</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(116,70,53);" title="Index 12: saddlebrown - C:0.000 M:0.393 Y:0.538 K:0.541">12</div>
+        </div>
+        <div>
+            <div class="cell" style="background-color: rgb(116,70,53);" title="Index 12: saddlebrown - C:0.000 M:0.393 Y:0.538 K:0.541">12</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(255,228,200);" title="Index 14: bisque - C:0.000 M:0.102 Y:0.212 K:0.000">14</div>
+            <div class="cell" style="background-color: rgb(157,133,109);" title="Index 24: gray - C:0.000 M:0.158 Y:0.304 K:0.380">24</div>
+            <div class="cell" style="background-color: rgb(17,18,11);" title="Index 21: black - C:0.053 M:0.000 Y:0.368 K:0.925">21</div>
+            <div class="cell" style="background-color: rgb(46,40,31);" title="Index 16: darkslategray - C:0.000 M:0.128 Y:0.319 K:0.816">16</div>
+            <div class="cell" style="background-color: rgb(32,30,23);" title="Index 19: black - C:0.000 M:0.062 Y:0.281 K:0.875">19</div>
+            <div class="cell" style="background-color: rgb(17,18,11);" title="Index 21: black - C:0.053 M:0.000 Y:0.368 K:0.925">21</div>
+            <div class="cell" style="background-color: rgb(17,18,11);" title="Index 21: black - C:0.053 M:0.000 Y:0.368 K:0.925">21</div>
+            <div class="cell" style="background-color: rgb(180,156,138);" title="Index 22: rosybrown - C:0.000 M:0.133 Y:0.233 K:0.294">22</div>
+            <div class="cell" style="background-color: rgb(255,228,200);" title="Index 14: bisque - C:0.000 M:0.102 Y:0.212 K:0.000">14</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(116,70,53);" title="Index 12: saddlebrown - C:0.000 M:0.393 Y:0.538 K:0.541">12</div>
+        </div>
+        <div>
+            <div class="cell" style="background-color: rgb(116,70,53);" title="Index 12: saddlebrown - C:0.000 M:0.393 Y:0.538 K:0.541">12</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(255,228,200);" title="Index 14: bisque - C:0.000 M:0.102 Y:0.212 K:0.000">14</div>
+            <div class="cell" style="background-color: rgb(157,133,109);" title="Index 24: gray - C:0.000 M:0.158 Y:0.304 K:0.380">24</div>
+            <div class="cell" style="background-color: rgb(17,18,11);" title="Index 21: black - C:0.053 M:0.000 Y:0.368 K:0.925">21</div>
+            <div class="cell" style="background-color: rgb(32,30,23);" title="Index 19: black - C:0.000 M:0.062 Y:0.281 K:0.875">19</div>
+            <div class="cell" style="background-color: rgb(17,18,11);" title="Index 21: black - C:0.053 M:0.000 Y:0.368 K:0.925">21</div>
+            <div class="cell" style="background-color: rgb(17,18,11);" title="Index 21: black - C:0.053 M:0.000 Y:0.368 K:0.925">21</div>
+            <div class="cell" style="background-color: rgb(17,18,11);" title="Index 21: black - C:0.053 M:0.000 Y:0.368 K:0.925">21</div>
+            <div class="cell" style="background-color: rgb(180,156,138);" title="Index 22: rosybrown - C:0.000 M:0.133 Y:0.233 K:0.294">22</div>
+            <div class="cell" style="background-color: rgb(255,228,200);" title="Index 14: bisque - C:0.000 M:0.102 Y:0.212 K:0.000">14</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(255,228,200);" title="Index 14: bisque - C:0.000 M:0.102 Y:0.212 K:0.000">14</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(116,70,53);" title="Index 12: saddlebrown - C:0.000 M:0.393 Y:0.538 K:0.541">12</div>
+        </div>
+        <div>
+            <div class="cell" style="background-color: rgb(133,67,65);" title="Index 0: sienna - C:0.000 M:0.496 Y:0.504 K:0.478">0</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(255,228,200);" title="Index 14: bisque - C:0.000 M:0.102 Y:0.212 K:0.000">14</div>
+            <div class="cell" style="background-color: rgb(143,117,89);" title="Index 25: gray - C:0.000 M:0.181 Y:0.375 K:0.435">25</div>
+            <div class="cell" style="background-color: rgb(5,8,2);" title="Index 23: black - C:0.375 M:0.000 Y:0.750 K:0.969">23</div>
+            <div class="cell" style="background-color: rgb(17,18,11);" title="Index 21: black - C:0.053 M:0.000 Y:0.368 K:0.925">21</div>
+            <div class="cell" style="background-color: rgb(5,8,2);" title="Index 23: black - C:0.375 M:0.000 Y:0.750 K:0.969">23</div>
+            <div class="cell" style="background-color: rgb(17,18,11);" title="Index 21: black - C:0.053 M:0.000 Y:0.368 K:0.925">21</div>
+            <div class="cell" style="background-color: rgb(17,18,11);" title="Index 21: black - C:0.053 M:0.000 Y:0.368 K:0.925">21</div>
+            <div class="cell" style="background-color: rgb(143,117,89);" title="Index 25: gray - C:0.000 M:0.181 Y:0.375 K:0.435">25</div>
+            <div class="cell" style="background-color: rgb(255,228,200);" title="Index 14: bisque - C:0.000 M:0.102 Y:0.212 K:0.000">14</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(116,70,53);" title="Index 12: saddlebrown - C:0.000 M:0.393 Y:0.538 K:0.541">12</div>
+        </div>
+        <div>
+            <div class="cell" style="background-color: rgb(133,67,65);" title="Index 0: sienna - C:0.000 M:0.496 Y:0.504 K:0.478">0</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(143,117,89);" title="Index 25: gray - C:0.000 M:0.181 Y:0.375 K:0.435">25</div>
+            <div class="cell" style="background-color: rgb(5,8,2);" title="Index 23: black - C:0.375 M:0.000 Y:0.750 K:0.969">23</div>
+            <div class="cell" style="background-color: rgb(5,8,2);" title="Index 23: black - C:0.375 M:0.000 Y:0.750 K:0.969">23</div>
+            <div class="cell" style="background-color: rgb(5,8,2);" title="Index 23: black - C:0.375 M:0.000 Y:0.750 K:0.969">23</div>
+            <div class="cell" style="background-color: rgb(17,18,11);" title="Index 21: black - C:0.053 M:0.000 Y:0.368 K:0.925">21</div>
+            <div class="cell" style="background-color: rgb(32,30,23);" title="Index 19: black - C:0.000 M:0.062 Y:0.281 K:0.875">19</div>
+            <div class="cell" style="background-color: rgb(82,71,56);" title="Index 15: darkolivegreen - C:0.000 M:0.134 Y:0.317 K:0.678">15</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(120,55,58);" title="Index 3: saddlebrown - C:0.000 M:0.537 Y:0.512 K:0.525">3</div>
+        </div>
+        <div>
+            <div class="cell" style="background-color: rgb(133,67,65);" title="Index 0: sienna - C:0.000 M:0.496 Y:0.504 K:0.478">0</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(143,117,89);" title="Index 25: gray - C:0.000 M:0.181 Y:0.375 K:0.435">25</div>
+            <div class="cell" style="background-color: rgb(17,18,11);" title="Index 21: black - C:0.053 M:0.000 Y:0.368 K:0.925">21</div>
+            <div class="cell" style="background-color: rgb(82,71,56);" title="Index 15: darkolivegreen - C:0.000 M:0.134 Y:0.317 K:0.678">15</div>
+            <div class="cell" style="background-color: rgb(46,40,31);" title="Index 16: darkslategray - C:0.000 M:0.128 Y:0.319 K:0.816">16</div>
+            <div class="cell" style="background-color: rgb(17,18,11);" title="Index 21: black - C:0.053 M:0.000 Y:0.368 K:0.925">21</div>
+            <div class="cell" style="background-color: rgb(46,40,31);" title="Index 16: darkslategray - C:0.000 M:0.128 Y:0.319 K:0.816">16</div>
+            <div class="cell" style="background-color: rgb(116,70,53);" title="Index 12: saddlebrown - C:0.000 M:0.393 Y:0.538 K:0.541">12</div>
+            <div class="cell" style="background-color: rgb(251,209,171);" title="Index 5: navajowhite - C:0.000 M:0.171 Y:0.318 K:0.012">5</div>
+            <div class="cell" style="background-color: rgb(255,228,200);" title="Index 14: bisque - C:0.000 M:0.102 Y:0.212 K:0.000">14</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(120,55,58);" title="Index 3: saddlebrown - C:0.000 M:0.537 Y:0.512 K:0.525">3</div>
+        </div>
+        <div>
+            <div class="cell" style="background-color: rgb(133,67,65);" title="Index 0: sienna - C:0.000 M:0.496 Y:0.504 K:0.478">0</div>
+            <div class="cell" style="background-color: rgb(228,195,174);" title="Index 18: wheat - C:0.000 M:0.144 Y:0.236 K:0.102">18</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(255,228,200);" title="Index 14: bisque - C:0.000 M:0.102 Y:0.212 K:0.000">14</div>
+            <div class="cell" style="background-color: rgb(143,117,89);" title="Index 25: gray - C:0.000 M:0.181 Y:0.375 K:0.435">25</div>
+            <div class="cell" style="background-color: rgb(64,54,38);" title="Index 20: darkslategray - C:0.000 M:0.169 Y:0.400 K:0.745">20</div>
+            <div class="cell" style="background-color: rgb(255,228,200);" title="Index 14: bisque - C:0.000 M:0.102 Y:0.212 K:0.000">14</div>
+            <div class="cell" style="background-color: rgb(228,195,174);" title="Index 18: wheat - C:0.000 M:0.144 Y:0.236 K:0.102">18</div>
+            <div class="cell" style="background-color: rgb(46,40,31);" title="Index 16: darkslategray - C:0.000 M:0.128 Y:0.319 K:0.816">16</div>
+            <div class="cell" style="background-color: rgb(82,71,56);" title="Index 15: darkolivegreen - C:0.000 M:0.134 Y:0.317 K:0.678">15</div>
+            <div class="cell" style="background-color: rgb(228,195,174);" title="Index 18: wheat - C:0.000 M:0.144 Y:0.236 K:0.102">18</div>
+            <div class="cell" style="background-color: rgb(232,181,140);" title="Index 8: burlywood - C:0.000 M:0.219 Y:0.399 K:0.086">8</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(133,67,65);" title="Index 0: sienna - C:0.000 M:0.496 Y:0.504 K:0.478">0</div>
+        </div>
+        <div>
+            <div class="cell" style="background-color: rgb(133,67,65);" title="Index 0: sienna - C:0.000 M:0.496 Y:0.504 K:0.478">0</div>
+            <div class="cell" style="background-color: rgb(191,177,176);" title="Index 27: silver - C:0.000 M:0.073 Y:0.078 K:0.247">27</div>
+            <div class="cell" style="background-color: rgb(217,201,196);" title="Index 28: lightgray - C:0.000 M:0.074 Y:0.092 K:0.149">28</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(143,117,89);" title="Index 25: gray - C:0.000 M:0.181 Y:0.375 K:0.435">25</div>
+            <div class="cell" style="background-color: rgb(64,54,38);" title="Index 20: darkslategray - C:0.000 M:0.169 Y:0.400 K:0.745">20</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(64,54,38);" title="Index 20: darkslategray - C:0.000 M:0.169 Y:0.400 K:0.745">20</div>
+            <div class="cell" style="background-color: rgb(143,117,89);" title="Index 25: gray - C:0.000 M:0.181 Y:0.375 K:0.435">25</div>
+            <div class="cell" style="background-color: rgb(255,228,200);" title="Index 14: bisque - C:0.000 M:0.102 Y:0.212 K:0.000">14</div>
+            <div class="cell" style="background-color: rgb(232,181,140);" title="Index 8: burlywood - C:0.000 M:0.219 Y:0.399 K:0.086">8</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(133,67,65);" title="Index 0: sienna - C:0.000 M:0.496 Y:0.504 K:0.478">0</div>
+        </div>
+        <div>
+            <div class="cell" style="background-color: rgb(120,55,58);" title="Index 3: saddlebrown - C:0.000 M:0.537 Y:0.512 K:0.525">3</div>
+            <div class="cell" style="background-color: rgb(191,177,176);" title="Index 27: silver - C:0.000 M:0.073 Y:0.078 K:0.247">27</div>
+            <div class="cell" style="background-color: rgb(217,201,196);" title="Index 28: lightgray - C:0.000 M:0.074 Y:0.092 K:0.149">28</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(157,133,109);" title="Index 24: gray - C:0.000 M:0.158 Y:0.304 K:0.380">24</div>
+            <div class="cell" style="background-color: rgb(82,71,56);" title="Index 15: darkolivegreen - C:0.000 M:0.134 Y:0.317 K:0.678">15</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(251,209,171);" title="Index 5: navajowhite - C:0.000 M:0.171 Y:0.318 K:0.012">5</div>
+            <div class="cell" style="background-color: rgb(64,54,38);" title="Index 20: darkslategray - C:0.000 M:0.169 Y:0.400 K:0.745">20</div>
+            <div class="cell" style="background-color: rgb(143,117,89);" title="Index 25: gray - C:0.000 M:0.181 Y:0.375 K:0.435">25</div>
+            <div class="cell" style="background-color: rgb(255,228,200);" title="Index 14: bisque - C:0.000 M:0.102 Y:0.212 K:0.000">14</div>
+            <div class="cell" style="background-color: rgb(232,181,140);" title="Index 8: burlywood - C:0.000 M:0.219 Y:0.399 K:0.086">8</div>
+            <div class="cell" style="background-color: rgb(251,209,171);" title="Index 5: navajowhite - C:0.000 M:0.171 Y:0.318 K:0.012">5</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(239,224,218);" title="Index 29: antiquewhite - C:0.000 M:0.063 Y:0.088 K:0.063">29</div>
+            <div class="cell" style="background-color: rgb(133,67,65);" title="Index 0: sienna - C:0.000 M:0.496 Y:0.504 K:0.478">0</div>
+        </div>
+        <div>
+            <div class="cell" style="background-color: rgb(120,55,58);" title="Index 3: saddlebrown - C:0.000 M:0.537 Y:0.512 K:0.525">3</div>
+            <div class="cell" style="background-color: rgb(217,201,196);" title="Index 28: lightgray - C:0.000 M:0.074 Y:0.092 K:0.149">28</div>
+            <div class="cell" style="background-color: rgb(217,201,196);" title="Index 28: lightgray - C:0.000 M:0.074 Y:0.092 K:0.149">28</div>
+            <div class="cell" style="background-color: rgb(249,213,186);" title="Index 6: peachpuff - C:0.000 M:0.141 Y:0.253 K:0.024">6</div>
+            <div class="cell" style="background-color: rgb(143,117,89);" title="Index 25: gray - C:0.000 M:0.181 Y:0.375 K:0.435">25</div>
+            <div class="cell" style="background-color: rgb(115,98,82);" title="Index 17: dimgray - C:0.000 M:0.147 Y:0.284 K:0.545">17</div>
+            <div class="cell" style="background-color: rgb(255,228,200);" title="Index 14: bisque - C:0.000 M:0.102 Y:0.212 K:0.000">14</div>
+            <div class="cell" style="background-color: rgb(232,181,140);" title="Index 8: burlywood - C:0.000 M:0.219 Y:0.399 K:0.086">8</div>
+            <div class="cell" style="background-color: rgb(87,59,33);" title="Index 30: darkolivegreen - C:0.000 M:0.322 Y:0.621 K:0.659">30</div>
+            <div class="cell" style="background-color: rgb(172,142,114);" title="Index 13: rosybrown - C:0.000 M:0.173 Y:0.341 K:0.322">13</div>
+            <div class="cell" style="background-color: rgb(255,228,200);" title="Index 14: bisque - C:0.000 M:0.102 Y:0.212 K:0.000">14</div>
+            <div class="cell" style="background-color: rgb(228,195,174);" title="Index 18: wheat - C:0.000 M:0.144 Y:0.236 K:0.102">18</div>
+            <div class="cell" style="background-color: rgb(228,195,174);" title="Index 18: wheat - C:0.000 M:0.144 Y:0.236 K:0.102">18</div>
+            <div class="cell" style="background-color: rgb(239,224,218);" title="Index 29: antiquewhite - C:0.000 M:0.063 Y:0.088 K:0.063">29</div>
+            <div class="cell" style="background-color: rgb(239,224,218);" title="Index 29: antiquewhite - C:0.000 M:0.063 Y:0.088 K:0.063">29</div>
+            <div class="cell" style="background-color: rgb(133,67,65);" title="Index 0: sienna - C:0.000 M:0.496 Y:0.504 K:0.478">0</div>
+        </div>
+        <div>
+            <div class="cell" style="background-color: rgb(120,55,58);" title="Index 3: saddlebrown - C:0.000 M:0.537 Y:0.512 K:0.525">3</div>
+            <div class="cell" style="background-color: rgb(244,234,231);" title="Index 31: linen - C:0.000 M:0.041 Y:0.053 K:0.043">31</div>
+            <div class="cell" style="background-color: rgb(244,234,231);" title="Index 31: linen - C:0.000 M:0.041 Y:0.053 K:0.043">31</div>
+            <div class="cell" style="background-color: rgb(217,201,196);" title="Index 28: lightgray - C:0.000 M:0.074 Y:0.092 K:0.149">28</div>
+            <div class="cell" style="background-color: rgb(64,54,38);" title="Index 20: darkslategray - C:0.000 M:0.169 Y:0.400 K:0.745">20</div>
+            <div class="cell" style="background-color: rgb(157,133,109);" title="Index 24: gray - C:0.000 M:0.158 Y:0.304 K:0.380">24</div>
+            <div class="cell" style="background-color: rgb(255,228,200);" title="Index 14: bisque - C:0.000 M:0.102 Y:0.212 K:0.000">14</div>
+            <div class="cell" style="background-color: rgb(213,182,157);" title="Index 26: tan - C:0.000 M:0.149 Y:0.262 K:0.161">26</div>
+            <div class="cell" style="background-color: rgb(87,59,33);" title="Index 30: darkolivegreen - C:0.000 M:0.322 Y:0.621 K:0.659">30</div>
+            <div class="cell" style="background-color: rgb(180,156,138);" title="Index 22: rosybrown - C:0.000 M:0.133 Y:0.233 K:0.294">22</div>
+            <div class="cell" style="background-color: rgb(244,234,231);" title="Index 31: linen - C:0.000 M:0.041 Y:0.053 K:0.043">31</div>
+            <div class="cell" style="background-color: rgb(239,224,218);" title="Index 29: antiquewhite - C:0.000 M:0.063 Y:0.088 K:0.063">29</div>
+            <div class="cell" style="background-color: rgb(228,195,174);" title="Index 18: wheat - C:0.000 M:0.144 Y:0.236 K:0.102">18</div>
+            <div class="cell" style="background-color: rgb(244,234,231);" title="Index 31: linen - C:0.000 M:0.041 Y:0.053 K:0.043">31</div>
+            <div class="cell" style="background-color: rgb(239,224,218);" title="Index 29: antiquewhite - C:0.000 M:0.063 Y:0.088 K:0.063">29</div>
+            <div class="cell" style="background-color: rgb(133,67,65);" title="Index 0: sienna - C:0.000 M:0.496 Y:0.504 K:0.478">0</div>
+        </div>
+        <div>
+            <div class="cell" style="background-color: rgb(120,55,58);" title="Index 3: saddlebrown - C:0.000 M:0.537 Y:0.512 K:0.525">3</div>
+            <div class="cell" style="background-color: rgb(244,234,231);" title="Index 31: linen - C:0.000 M:0.041 Y:0.053 K:0.043">31</div>
+            <div class="cell" style="background-color: rgb(244,234,231);" title="Index 31: linen - C:0.000 M:0.041 Y:0.053 K:0.043">31</div>
+            <div class="cell" style="background-color: rgb(244,234,231);" title="Index 31: linen - C:0.000 M:0.041 Y:0.053 K:0.043">31</div>
+            <div class="cell" style="background-color: rgb(180,156,138);" title="Index 22: rosybrown - C:0.000 M:0.133 Y:0.233 K:0.294">22</div>
+            <div class="cell" style="background-color: rgb(180,156,138);" title="Index 22: rosybrown - C:0.000 M:0.133 Y:0.233 K:0.294">22</div>
+            <div class="cell" style="background-color: rgb(244,234,231);" title="Index 31: linen - C:0.000 M:0.041 Y:0.053 K:0.043">31</div>
+            <div class="cell" style="background-color: rgb(213,182,157);" title="Index 26: tan - C:0.000 M:0.149 Y:0.262 K:0.161">26</div>
+            <div class="cell" style="background-color: rgb(87,59,33);" title="Index 30: darkolivegreen - C:0.000 M:0.322 Y:0.621 K:0.659">30</div>
+            <div class="cell" style="background-color: rgb(228,195,174);" title="Index 18: wheat - C:0.000 M:0.144 Y:0.236 K:0.102">18</div>
+            <div class="cell" style="background-color: rgb(244,234,231);" title="Index 31: linen - C:0.000 M:0.041 Y:0.053 K:0.043">31</div>
+            <div class="cell" style="background-color: rgb(244,234,231);" title="Index 31: linen - C:0.000 M:0.041 Y:0.053 K:0.043">31</div>
+            <div class="cell" style="background-color: rgb(228,195,174);" title="Index 18: wheat - C:0.000 M:0.144 Y:0.236 K:0.102">18</div>
+            <div class="cell" style="background-color: rgb(239,224,218);" title="Index 29: antiquewhite - C:0.000 M:0.063 Y:0.088 K:0.063">29</div>
+            <div class="cell" style="background-color: rgb(239,224,218);" title="Index 29: antiquewhite - C:0.000 M:0.063 Y:0.088 K:0.063">29</div>
+            <div class="cell" style="background-color: rgb(133,67,65);" title="Index 0: sienna - C:0.000 M:0.496 Y:0.504 K:0.478">0</div>
+        </div>
+        <div>
+            <div class="cell" style="background-color: rgb(120,55,58);" title="Index 3: saddlebrown - C:0.000 M:0.537 Y:0.512 K:0.525">3</div>
+            <div class="cell" style="background-color: rgb(244,234,231);" title="Index 31: linen - C:0.000 M:0.041 Y:0.053 K:0.043">31</div>
+            <div class="cell" style="background-color: rgb(244,234,231);" title="Index 31: linen - C:0.000 M:0.041 Y:0.053 K:0.043">31</div>
+            <div class="cell" style="background-color: rgb(244,234,231);" title="Index 31: linen - C:0.000 M:0.041 Y:0.053 K:0.043">31</div>
+            <div class="cell" style="background-color: rgb(244,234,231);" title="Index 31: linen - C:0.000 M:0.041 Y:0.053 K:0.043">31</div>
+            <div class="cell" style="background-color: rgb(244,234,231);" title="Index 31: linen - C:0.000 M:0.041 Y:0.053 K:0.043">31</div>
+            <div class="cell" style="background-color: rgb(239,224,218);" title="Index 29: antiquewhite - C:0.000 M:0.063 Y:0.088 K:0.063">29</div>
+            <div class="cell" style="background-color: rgb(213,182,157);" title="Index 26: tan - C:0.000 M:0.149 Y:0.262 K:0.161">26</div>
+            <div class="cell" style="background-color: rgb(116,70,53);" title="Index 12: saddlebrown - C:0.000 M:0.393 Y:0.538 K:0.541">12</div>
+            <div class="cell" style="background-color: rgb(217,201,196);" title="Index 28: lightgray - C:0.000 M:0.074 Y:0.092 K:0.149">28</div>
+            <div class="cell" style="background-color: rgb(244,234,231);" title="Index 31: linen - C:0.000 M:0.041 Y:0.053 K:0.043">31</div>
+            <div class="cell" style="background-color: rgb(244,234,231);" title="Index 31: linen - C:0.000 M:0.041 Y:0.053 K:0.043">31</div>
+            <div class="cell" style="background-color: rgb(228,195,174);" title="Index 18: wheat - C:0.000 M:0.144 Y:0.236 K:0.102">18</div>
+            <div class="cell" style="background-color: rgb(251,220,194);" title="Index 11: bisque - C:0.000 M:0.123 Y:0.226 K:0.012">11</div>
+            <div class="cell" style="background-color: rgb(239,224,218);" title="Index 29: antiquewhite - C:0.000 M:0.063 Y:0.088 K:0.063">29</div>
+            <div class="cell" style="background-color: rgb(133,67,65);" title="Index 0: sienna - C:0.000 M:0.496 Y:0.504 K:0.478">0</div>
+        </div>
+        <div>
+            <div class="cell" style="background-color: rgb(120,55,58);" title="Index 3: saddlebrown - C:0.000 M:0.537 Y:0.512 K:0.525">3</div>
+            <div class="cell" style="background-color: rgb(239,224,218);" title="Index 29: antiquewhite - C:0.000 M:0.063 Y:0.088 K:0.063">29</div>
+            <div class="cell" style="background-color: rgb(244,234,231);" title="Index 31: linen - C:0.000 M:0.041 Y:0.053 K:0.043">31</div>
+            <div class="cell" style="background-color: rgb(244,234,231);" title="Index 31: linen - C:0.000 M:0.041 Y:0.053 K:0.043">31</div>
+            <div class="cell" style="background-color: rgb(244,234,231);" title="Index 31: linen - C:0.000 M:0.041 Y:0.053 K:0.043">31</div>
+            <div class="cell" style="background-color: rgb(244,234,231);" title="Index 31: linen - C:0.000 M:0.041 Y:0.053 K:0.043">31</div>
+            <div class="cell" style="background-color: rgb(244,234,231);" title="Index 31: linen - C:0.000 M:0.041 Y:0.053 K:0.043">31</div>
+            <div class="cell" style="background-color: rgb(191,177,176);" title="Index 27: silver - C:0.000 M:0.073 Y:0.078 K:0.247">27</div>
+            <div class="cell" style="background-color: rgb(32,30,23);" title="Index 19: black - C:0.000 M:0.062 Y:0.281 K:0.875">19</div>
+            <div class="cell" style="background-color: rgb(180,156,138);" title="Index 22: rosybrown - C:0.000 M:0.133 Y:0.233 K:0.294">22</div>
+            <div class="cell" style="background-color: rgb(239,224,218);" title="Index 29: antiquewhite - C:0.000 M:0.063 Y:0.088 K:0.063">29</div>
+            <div class="cell" style="background-color: rgb(239,224,218);" title="Index 29: antiquewhite - C:0.000 M:0.063 Y:0.088 K:0.063">29</div>
+            <div class="cell" style="background-color: rgb(217,201,196);" title="Index 28: lightgray - C:0.000 M:0.074 Y:0.092 K:0.149">28</div>
+            <div class="cell" style="background-color: rgb(228,195,174);" title="Index 18: wheat - C:0.000 M:0.144 Y:0.236 K:0.102">18</div>
+            <div class="cell" style="background-color: rgb(239,224,218);" title="Index 29: antiquewhite - C:0.000 M:0.063 Y:0.088 K:0.063">29</div>
+            <div class="cell" style="background-color: rgb(133,67,65);" title="Index 0: sienna - C:0.000 M:0.496 Y:0.504 K:0.478">0</div>
+        </div>
+        <div>
+            <div class="cell" style="background-color: rgb(120,55,58);" title="Index 3: saddlebrown - C:0.000 M:0.537 Y:0.512 K:0.525">3</div>
+            <div class="cell" style="background-color: rgb(239,224,218);" title="Index 29: antiquewhite - C:0.000 M:0.063 Y:0.088 K:0.063">29</div>
+            <div class="cell" style="background-color: rgb(239,224,218);" title="Index 29: antiquewhite - C:0.000 M:0.063 Y:0.088 K:0.063">29</div>
+            <div class="cell" style="background-color: rgb(239,224,218);" title="Index 29: antiquewhite - C:0.000 M:0.063 Y:0.088 K:0.063">29</div>
+            <div class="cell" style="background-color: rgb(239,224,218);" title="Index 29: antiquewhite - C:0.000 M:0.063 Y:0.088 K:0.063">29</div>
+            <div class="cell" style="background-color: rgb(239,224,218);" title="Index 29: antiquewhite - C:0.000 M:0.063 Y:0.088 K:0.063">29</div>
+            <div class="cell" style="background-color: rgb(244,234,231);" title="Index 31: linen - C:0.000 M:0.041 Y:0.053 K:0.043">31</div>
+            <div class="cell" style="background-color: rgb(191,177,176);" title="Index 27: silver - C:0.000 M:0.073 Y:0.078 K:0.247">27</div>
+            <div class="cell" style="background-color: rgb(82,71,56);" title="Index 15: darkolivegreen - C:0.000 M:0.134 Y:0.317 K:0.678">15</div>
+            <div class="cell" style="background-color: rgb(228,195,174);" title="Index 18: wheat - C:0.000 M:0.144 Y:0.236 K:0.102">18</div>
+            <div class="cell" style="background-color: rgb(239,224,218);" title="Index 29: antiquewhite - C:0.000 M:0.063 Y:0.088 K:0.063">29</div>
+            <div class="cell" style="background-color: rgb(217,201,196);" title="Index 28: lightgray - C:0.000 M:0.074 Y:0.092 K:0.149">28</div>
+            <div class="cell" style="background-color: rgb(217,201,196);" title="Index 28: lightgray - C:0.000 M:0.074 Y:0.092 K:0.149">28</div>
+            <div class="cell" style="background-color: rgb(228,195,174);" title="Index 18: wheat - C:0.000 M:0.144 Y:0.236 K:0.102">18</div>
+            <div class="cell" style="background-color: rgb(239,224,218);" title="Index 29: antiquewhite - C:0.000 M:0.063 Y:0.088 K:0.063">29</div>
+            <div class="cell" style="background-color: rgb(120,55,58);" title="Index 3: saddlebrown - C:0.000 M:0.537 Y:0.512 K:0.525">3</div>
+        </div>
+        <div>
+            <div class="cell" style="background-color: rgb(120,55,58);" title="Index 3: saddlebrown - C:0.000 M:0.537 Y:0.512 K:0.525">3</div>
+            <div class="cell" style="background-color: rgb(244,234,231);" title="Index 31: linen - C:0.000 M:0.041 Y:0.053 K:0.043">31</div>
+            <div class="cell" style="background-color: rgb(244,234,231);" title="Index 31: linen - C:0.000 M:0.041 Y:0.053 K:0.043">31</div>
+            <div class="cell" style="background-color: rgb(244,234,231);" title="Index 31: linen - C:0.000 M:0.041 Y:0.053 K:0.043">31</div>
+            <div class="cell" style="background-color: rgb(244,234,231);" title="Index 31: linen - C:0.000 M:0.041 Y:0.053 K:0.043">31</div>
+            <div class="cell" style="background-color: rgb(239,224,218);" title="Index 29: antiquewhite - C:0.000 M:0.063 Y:0.088 K:0.063">29</div>
+            <div class="cell" style="background-color: rgb(239,224,218);" title="Index 29: antiquewhite - C:0.000 M:0.063 Y:0.088 K:0.063">29</div>
+            <div class="cell" style="background-color: rgb(239,224,218);" title="Index 29: antiquewhite - C:0.000 M:0.063 Y:0.088 K:0.063">29</div>
+            <div class="cell" style="background-color: rgb(239,224,218);" title="Index 29: antiquewhite - C:0.000 M:0.063 Y:0.088 K:0.063">29</div>
+            <div class="cell" style="background-color: rgb(239,224,218);" title="Index 29: antiquewhite - C:0.000 M:0.063 Y:0.088 K:0.063">29</div>
+            <div class="cell" style="background-color: rgb(239,224,218);" title="Index 29: antiquewhite - C:0.000 M:0.063 Y:0.088 K:0.063">29</div>
+            <div class="cell" style="background-color: rgb(239,224,218);" title="Index 29: antiquewhite - C:0.000 M:0.063 Y:0.088 K:0.063">29</div>
+            <div class="cell" style="background-color: rgb(239,224,218);" title="Index 29: antiquewhite - C:0.000 M:0.063 Y:0.088 K:0.063">29</div>
+            <div class="cell" style="background-color: rgb(217,201,196);" title="Index 28: lightgray - C:0.000 M:0.074 Y:0.092 K:0.149">28</div>
+            <div class="cell" style="background-color: rgb(239,224,218);" title="Index 29: antiquewhite - C:0.000 M:0.063 Y:0.088 K:0.063">29</div>
+            <div class="cell" style="background-color: rgb(133,67,65);" title="Index 0: sienna - C:0.000 M:0.496 Y:0.504 K:0.478">0</div>
+        </div>
+        <div>
+            <div class="cell" style="background-color: rgb(116,70,53);" title="Index 12: saddlebrown - C:0.000 M:0.393 Y:0.538 K:0.541">12</div>
+            <div class="cell" style="background-color: rgb(244,234,231);" title="Index 31: linen - C:0.000 M:0.041 Y:0.053 K:0.043">31</div>
+            <div class="cell" style="background-color: rgb(244,234,231);" title="Index 31: linen - C:0.000 M:0.041 Y:0.053 K:0.043">31</div>
+            <div class="cell" style="background-color: rgb(244,234,231);" title="Index 31: linen - C:0.000 M:0.041 Y:0.053 K:0.043">31</div>
+            <div class="cell" style="background-color: rgb(244,234,231);" title="Index 31: linen - C:0.000 M:0.041 Y:0.053 K:0.043">31</div>
+            <div class="cell" style="background-color: rgb(244,234,231);" title="Index 31: linen - C:0.000 M:0.041 Y:0.053 K:0.043">31</div>
+            <div class="cell" style="background-color: rgb(244,234,231);" title="Index 31: linen - C:0.000 M:0.041 Y:0.053 K:0.043">31</div>
+            <div class="cell" style="background-color: rgb(244,234,231);" title="Index 31: linen - C:0.000 M:0.041 Y:0.053 K:0.043">31</div>
+            <div class="cell" style="background-color: rgb(244,234,231);" title="Index 31: linen - C:0.000 M:0.041 Y:0.053 K:0.043">31</div>
+            <div class="cell" style="background-color: rgb(244,234,231);" title="Index 31: linen - C:0.000 M:0.041 Y:0.053 K:0.043">31</div>
+            <div class="cell" style="background-color: rgb(244,234,231);" title="Index 31: linen - C:0.000 M:0.041 Y:0.053 K:0.043">31</div>
+            <div class="cell" style="background-color: rgb(244,234,231);" title="Index 31: linen - C:0.000 M:0.041 Y:0.053 K:0.043">31</div>
+            <div class="cell" style="background-color: rgb(239,224,218);" title="Index 29: antiquewhite - C:0.000 M:0.063 Y:0.088 K:0.063">29</div>
+            <div class="cell" style="background-color: rgb(239,224,218);" title="Index 29: antiquewhite - C:0.000 M:0.063 Y:0.088 K:0.063">29</div>
+            <div class="cell" style="background-color: rgb(239,224,218);" title="Index 29: antiquewhite - C:0.000 M:0.063 Y:0.088 K:0.063">29</div>
+            <div class="cell" style="background-color: rgb(133,67,65);" title="Index 0: sienna - C:0.000 M:0.496 Y:0.504 K:0.478">0</div>
+        </div>
+        <div>
+            <div class="cell" style="background-color: rgb(133,67,65);" title="Index 0: sienna - C:0.000 M:0.496 Y:0.504 K:0.478">0</div>
+            <div class="cell" style="background-color: rgb(133,67,65);" title="Index 0: sienna - C:0.000 M:0.496 Y:0.504 K:0.478">0</div>
+            <div class="cell" style="background-color: rgb(133,67,65);" title="Index 0: sienna - C:0.000 M:0.496 Y:0.504 K:0.478">0</div>
+            <div class="cell" style="background-color: rgb(120,55,58);" title="Index 3: saddlebrown - C:0.000 M:0.537 Y:0.512 K:0.525">3</div>
+            <div class="cell" style="background-color: rgb(120,55,58);" title="Index 3: saddlebrown - C:0.000 M:0.537 Y:0.512 K:0.525">3</div>
+            <div class="cell" style="background-color: rgb(106,46,47);" title="Index 1: saddlebrown - C:0.000 M:0.566 Y:0.557 K:0.584">1</div>
+            <div class="cell" style="background-color: rgb(106,46,47);" title="Index 1: saddlebrown - C:0.000 M:0.566 Y:0.557 K:0.584">1</div>
+            <div class="cell" style="background-color: rgb(106,46,47);" title="Index 1: saddlebrown - C:0.000 M:0.566 Y:0.557 K:0.584">1</div>
+            <div class="cell" style="background-color: rgb(106,46,47);" title="Index 1: saddlebrown - C:0.000 M:0.566 Y:0.557 K:0.584">1</div>
+            <div class="cell" style="background-color: rgb(106,46,47);" title="Index 1: saddlebrown - C:0.000 M:0.566 Y:0.557 K:0.584">1</div>
+            <div class="cell" style="background-color: rgb(106,46,47);" title="Index 1: saddlebrown - C:0.000 M:0.566 Y:0.557 K:0.584">1</div>
+            <div class="cell" style="background-color: rgb(106,46,47);" title="Index 1: saddlebrown - C:0.000 M:0.566 Y:0.557 K:0.584">1</div>
+            <div class="cell" style="background-color: rgb(106,46,47);" title="Index 1: saddlebrown - C:0.000 M:0.566 Y:0.557 K:0.584">1</div>
+            <div class="cell" style="background-color: rgb(106,46,47);" title="Index 1: saddlebrown - C:0.000 M:0.566 Y:0.557 K:0.584">1</div>
+            <div class="cell" style="background-color: rgb(120,55,58);" title="Index 3: saddlebrown - C:0.000 M:0.537 Y:0.512 K:0.525">3</div>
+            <div class="cell" style="background-color: rgb(133,67,65);" title="Index 0: sienna - C:0.000 M:0.496 Y:0.504 K:0.478">0</div>
+        </div>
+    </div>
+    
+    <h2>Color Legend</h2>
+    <div class="legend">
+        <div class="legend-item">
+            <div class="color-square" style="background-color: rgb(133,67,65);"></div>
+            <strong>Index 0:</strong> sienna<br>
+            RGB: rgb(133,67,65)<br>
+            Hex: #854341<br>
+            CMYK: C:0.000 M:0.496 Y:0.504 K:0.478<br>
+            Count: 38 pixels
+        </div>
+        <div class="legend-item">
+            <div class="color-square" style="background-color: rgb(106,46,47);"></div>
+            <strong>Index 1:</strong> saddlebrown<br>
+            RGB: rgb(106,46,47)<br>
+            Hex: #6a2e2f<br>
+            CMYK: C:0.000 M:0.566 Y:0.557 K:0.584<br>
+            Count: 18 pixels
+        </div>
+        <div class="legend-item">
+            <div class="color-square" style="background-color: rgb(86,38,34);"></div>
+            <strong>Index 2:</strong> saddlebrown<br>
+            RGB: rgb(86,38,34)<br>
+            Hex: #562622<br>
+            CMYK: C:0.000 M:0.558 Y:0.605 K:0.663<br>
+            Count: 7 pixels
+        </div>
+        <div class="legend-item">
+            <div class="color-square" style="background-color: rgb(120,55,58);"></div>
+            <strong>Index 3:</strong> saddlebrown<br>
+            RGB: rgb(120,55,58)<br>
+            Hex: #78373a<br>
+            CMYK: C:0.000 M:0.537 Y:0.512 K:0.525<br>
+            Count: 19 pixels
+        </div>
+        <div class="legend-item">
+            <div class="color-square" style="background-color: rgb(250,200,156);"></div>
+            <strong>Index 4:</strong> navajowhite<br>
+            RGB: rgb(250,200,156)<br>
+            Hex: #fac89c<br>
+            CMYK: C:0.000 M:0.200 Y:0.376 K:0.020<br>
+            Count: 17 pixels
+        </div>
+        <div class="legend-item">
+            <div class="color-square" style="background-color: rgb(251,209,171);"></div>
+            <strong>Index 5:</strong> navajowhite<br>
+            RGB: rgb(251,209,171)<br>
+            Hex: #fbd1ab<br>
+            CMYK: C:0.000 M:0.171 Y:0.318 K:0.012<br>
+            Count: 34 pixels
+        </div>
+        <div class="legend-item">
+            <div class="color-square" style="background-color: rgb(249,213,186);"></div>
+            <strong>Index 6:</strong> peachpuff<br>
+            RGB: rgb(249,213,186)<br>
+            Hex: #f9d5ba<br>
+            CMYK: C:0.000 M:0.141 Y:0.253 K:0.024<br>
+            Count: 61 pixels
+        </div>
+        <div class="legend-item">
+            <div class="color-square" style="background-color: rgb(228,152,92);"></div>
+            <strong>Index 7:</strong> sandybrown<br>
+            RGB: rgb(228,152,92)<br>
+            Hex: #e4985c<br>
+            CMYK: C:0.000 M:0.332 Y:0.594 K:0.102<br>
+            Count: 3 pixels
+        </div>
+        <div class="legend-item">
+            <div class="color-square" style="background-color: rgb(232,181,140);"></div>
+            <strong>Index 8:</strong> burlywood<br>
+            RGB: rgb(232,181,140)<br>
+            Hex: #e8b58c<br>
+            CMYK: C:0.000 M:0.219 Y:0.399 K:0.086<br>
+            Count: 8 pixels
+        </div>
+        <div class="legend-item">
+            <div class="color-square" style="background-color: rgb(176,76,0);"></div>
+            <strong>Index 9:</strong> saddlebrown<br>
+            RGB: rgb(176,76,0)<br>
+            Hex: #b04c00<br>
+            CMYK: C:0.000 M:0.571 Y:1.000 K:0.306<br>
+            Count: 1 pixels
+        </div>
+        <div class="legend-item">
+            <div class="color-square" style="background-color: rgb(208,118,51);"></div>
+            <strong>Index 10:</strong> peru<br>
+            RGB: rgb(208,118,51)<br>
+            Hex: #d07633<br>
+            CMYK: C:0.000 M:0.428 Y:0.755 K:0.184<br>
+            Count: 2 pixels
+        </div>
+        <div class="legend-item">
+            <div class="color-square" style="background-color: rgb(251,220,194);"></div>
+            <strong>Index 11:</strong> bisque<br>
+            RGB: rgb(251,220,194)<br>
+            Hex: #fbdcc2<br>
+            CMYK: C:0.000 M:0.123 Y:0.226 K:0.012<br>
+            Count: 53 pixels
+        </div>
+        <div class="legend-item">
+            <div class="color-square" style="background-color: rgb(116,70,53);"></div>
+            <strong>Index 12:</strong> saddlebrown<br>
+            RGB: rgb(116,70,53)<br>
+            Hex: #744635<br>
+            CMYK: C:0.000 M:0.393 Y:0.538 K:0.541<br>
+            Count: 13 pixels
+        </div>
+        <div class="legend-item">
+            <div class="color-square" style="background-color: rgb(172,142,114);"></div>
+            <strong>Index 13:</strong> rosybrown<br>
+            RGB: rgb(172,142,114)<br>
+            Hex: #ac8e72<br>
+            CMYK: C:0.000 M:0.173 Y:0.341 K:0.322<br>
+            Count: 4 pixels
+        </div>
+        <div class="legend-item">
+            <div class="color-square" style="background-color: rgb(255,228,200);"></div>
+            <strong>Index 14:</strong> bisque<br>
+            RGB: rgb(255,228,200)<br>
+            Hex: #ffe4c8<br>
+            CMYK: C:0.000 M:0.102 Y:0.212 K:0.000<br>
+            Count: 20 pixels
+        </div>
+        <div class="legend-item">
+            <div class="color-square" style="background-color: rgb(82,71,56);"></div>
+            <strong>Index 15:</strong> darkolivegreen<br>
+            RGB: rgb(82,71,56)<br>
+            Hex: #524738<br>
+            CMYK: C:0.000 M:0.134 Y:0.317 K:0.678<br>
+            Count: 9 pixels
+        </div>
+        <div class="legend-item">
+            <div class="color-square" style="background-color: rgb(46,40,31);"></div>
+            <strong>Index 16:</strong> darkslategray<br>
+            RGB: rgb(46,40,31)<br>
+            Hex: #2e281f<br>
+            CMYK: C:0.000 M:0.128 Y:0.319 K:0.816<br>
+            Count: 20 pixels
+        </div>
+        <div class="legend-item">
+            <div class="color-square" style="background-color: rgb(115,98,82);"></div>
+            <strong>Index 17:</strong> dimgray<br>
+            RGB: rgb(115,98,82)<br>
+            Hex: #736252<br>
+            CMYK: C:0.000 M:0.147 Y:0.284 K:0.545<br>
+            Count: 5 pixels
+        </div>
+        <div class="legend-item">
+            <div class="color-square" style="background-color: rgb(228,195,174);"></div>
+            <strong>Index 18:</strong> wheat<br>
+            RGB: rgb(228,195,174)<br>
+            Hex: #e4c3ae<br>
+            CMYK: C:0.000 M:0.144 Y:0.236 K:0.102<br>
+            Count: 14 pixels
+        </div>
+        <div class="legend-item">
+            <div class="color-square" style="background-color: rgb(32,30,23);"></div>
+            <strong>Index 19:</strong> black<br>
+            RGB: rgb(32,30,23)<br>
+            Hex: #201e17<br>
+            CMYK: C:0.000 M:0.062 Y:0.281 K:0.875<br>
+            Count: 16 pixels
+        </div>
+        <div class="legend-item">
+            <div class="color-square" style="background-color: rgb(64,54,38);"></div>
+            <strong>Index 20:</strong> darkslategray<br>
+            RGB: rgb(64,54,38)<br>
+            Hex: #403626<br>
+            CMYK: C:0.000 M:0.169 Y:0.400 K:0.745<br>
+            Count: 9 pixels
+        </div>
+        <div class="legend-item">
+            <div class="color-square" style="background-color: rgb(17,18,11);"></div>
+            <strong>Index 21:</strong> black<br>
+            RGB: rgb(17,18,11)<br>
+            Hex: #11120b<br>
+            CMYK: C:0.053 M:0.000 Y:0.368 K:0.925<br>
+            Count: 18 pixels
+        </div>
+        <div class="legend-item">
+            <div class="color-square" style="background-color: rgb(180,156,138);"></div>
+            <strong>Index 22:</strong> rosybrown<br>
+            RGB: rgb(180,156,138)<br>
+            Hex: #b49c8a<br>
+            CMYK: C:0.000 M:0.133 Y:0.233 K:0.294<br>
+            Count: 8 pixels
+        </div>
+        <div class="legend-item">
+            <div class="color-square" style="background-color: rgb(5,8,2);"></div>
+            <strong>Index 23:</strong> black<br>
+            RGB: rgb(5,8,2)<br>
+            Hex: #050802<br>
+            CMYK: C:0.375 M:0.000 Y:0.750 K:0.969<br>
+            Count: 7 pixels
+        </div>
+        <div class="legend-item">
+            <div class="color-square" style="background-color: rgb(157,133,109);"></div>
+            <strong>Index 24:</strong> gray<br>
+            RGB: rgb(157,133,109)<br>
+            Hex: #9d856d<br>
+            CMYK: C:0.000 M:0.158 Y:0.304 K:0.380<br>
+            Count: 6 pixels
+        </div>
+        <div class="legend-item">
+            <div class="color-square" style="background-color: rgb(143,117,89);"></div>
+            <strong>Index 25:</strong> gray<br>
+            RGB: rgb(143,117,89)<br>
+            Hex: #8f7559<br>
+            CMYK: C:0.000 M:0.181 Y:0.375 K:0.435<br>
+            Count: 11 pixels
+        </div>
+        <div class="legend-item">
+            <div class="color-square" style="background-color: rgb(213,182,157);"></div>
+            <strong>Index 26:</strong> tan<br>
+            RGB: rgb(213,182,157)<br>
+            Hex: #d5b69d<br>
+            CMYK: C:0.000 M:0.149 Y:0.262 K:0.161<br>
+            Count: 4 pixels
+        </div>
+        <div class="legend-item">
+            <div class="color-square" style="background-color: rgb(191,177,176);"></div>
+            <strong>Index 27:</strong> silver<br>
+            RGB: rgb(191,177,176)<br>
+            Hex: #bfb1b0<br>
+            CMYK: C:0.000 M:0.073 Y:0.078 K:0.247<br>
+            Count: 4 pixels
+        </div>
+        <div class="legend-item">
+            <div class="color-square" style="background-color: rgb(217,201,196);"></div>
+            <strong>Index 28:</strong> lightgray<br>
+            RGB: rgb(217,201,196)<br>
+            Hex: #d9c9c4<br>
+            CMYK: C:0.000 M:0.074 Y:0.092 K:0.149<br>
+            Count: 10 pixels
+        </div>
+        <div class="legend-item">
+            <div class="color-square" style="background-color: rgb(239,224,218);"></div>
+            <strong>Index 29:</strong> antiquewhite<br>
+            RGB: rgb(239,224,218)<br>
+            Hex: #efe0da<br>
+            CMYK: C:0.000 M:0.063 Y:0.088 K:0.063<br>
+            Count: 32 pixels
+        </div>
+        <div class="legend-item">
+            <div class="color-square" style="background-color: rgb(87,59,33);"></div>
+            <strong>Index 30:</strong> darkolivegreen<br>
+            RGB: rgb(87,59,33)<br>
+            Hex: #573b21<br>
+            CMYK: C:0.000 M:0.322 Y:0.621 K:0.659<br>
+            Count: 3 pixels
+        </div>
+        <div class="legend-item">
+            <div class="color-square" style="background-color: rgb(244,234,231);"></div>
+            <strong>Index 31:</strong> linen<br>
+            RGB: rgb(244,234,231)<br>
+            Hex: #f4eae7<br>
+            CMYK: C:0.000 M:0.041 Y:0.053 K:0.043<br>
+            Count: 38 pixels
+        </div>
+    </div>
+</body>
+</html>
