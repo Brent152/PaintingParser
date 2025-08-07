@@ -1,0 +1,9 @@
+# Core dependencies (already required)
+pillow
+numpy
+scikit-learn
+webcolors==24.11.1
+
+# Web UI dependencies
+streamlit>=1.28.0
+pandas>=1.5.0
