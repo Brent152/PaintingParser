@@ -188,6 +188,443 @@ def create_download_zip(files_dict, visualization_type=None, filename_prefix="pa
     zip_buffer.seek(0)
     return zip_buffer.getvalue()
 
+def create_print_swatch_sheet(color_data, results, page_size="a4", swatches_per_row=8, output_format="png", square_size_inches=0.2, include_visualization=False):
+    """Create a printable swatch sheet with color swatches for physical comparison.
+    
+    Args:
+        color_data: List of color dictionaries with RGB, CMYK, names, etc.
+        results: Processing results dict
+        page_size: "letter" (8.5x11) or "a4" 
+        swatches_per_row: Number of swatches per row
+        output_format: "png" or "pdf"
+        square_size_inches: Size of color squares in inches
+        include_visualization: Whether to include the color visualization on the sheet
+    
+    Returns:
+        PIL Image (for PNG) or bytes (for PDF)
+    """
+    
+    if output_format == "pdf":
+        return create_pdf_swatch_sheet(color_data, results, page_size, swatches_per_row, square_size_inches, include_visualization)
+    
+    # PNG generation (existing code)
+    # Page dimensions in pixels at 300 DPI for crisp printing
+    if page_size == "letter":
+        page_width, page_height = 2550, 3300  # 8.5" x 11" at 300 DPI
+    else:  # A4
+        page_width, page_height = 2480, 3508  # 8.27" x 11.69" at 300 DPI
+    
+    # Calculate layout
+    margin = 150  # 0.5" margin at 300 DPI
+    usable_width = page_width - (2 * margin)
+    usable_height = page_height - (2 * margin)
+    
+    # Header space for title and image info
+    header_height = 400  # Increased for visualization
+    content_start_y = margin + header_height
+    content_height = usable_height - header_height
+    
+    # Check if we have visualization to include
+    has_visualization = include_visualization and 'visualization' in results['files'] and results.get('visualization_type') == 'png'
+    
+    # Swatch layout - configurable square size
+    swatch_gap = 15
+    
+    # Reserve space for visualization if available (left side)
+    viz_width = 0
+    if has_visualization:
+        viz_width = min(600, usable_width // 3)  # Use up to 1/3 of width
+        available_swatch_width = usable_width - viz_width - 30  # 30px gap
+    else:
+        available_swatch_width = usable_width
+    
+    column_width = (available_swatch_width - (swatches_per_row - 1) * swatch_gap) // swatches_per_row
+    
+    # Convert square size from inches to pixels at 300 DPI
+    color_square_size = int(square_size_inches * 300)  # 300 DPI conversion
+    
+    # Ensure square fits in column, but don't make it smaller than requested unless necessary
+    if color_square_size > column_width * 0.8:  # Leave some space for text alignment
+        color_square_size = int(column_width * 0.8)
+    
+    text_area_height = 200  # Plenty of space for larger text
+    swatch_height = color_square_size + text_area_height
+    
+    rows_needed = math.ceil(len(color_data) / swatches_per_row)
+    
+    # Create white background
+    img = Image.new('RGB', (page_width, page_height), 'white')
+    
+    try:
+        from PIL import ImageDraw, ImageFont
+        draw = ImageDraw.Draw(img)
+        
+        # Larger, more readable fonts
+        try:
+            title_font = ImageFont.truetype("arial.ttf", 48)
+            info_font = ImageFont.truetype("arial.ttf", 28)
+            swatch_font = ImageFont.truetype("arial.ttf", 20)  # Larger for readability
+            small_font = ImageFont.truetype("arial.ttf", 16)   # Larger than before
+            tiny_font = ImageFont.truetype("arial.ttf", 14)    # Still readable
+        except:
+            try:
+                title_font = ImageFont.truetype("calibri.ttf", 48)
+                info_font = ImageFont.truetype("calibri.ttf", 28)
+                swatch_font = ImageFont.truetype("calibri.ttf", 20)
+                small_font = ImageFont.truetype("calibri.ttf", 16)
+                tiny_font = ImageFont.truetype("calibri.ttf", 14)
+            except:
+                # Fall back to default font
+                title_font = ImageFont.load_default()
+                info_font = ImageFont.load_default()
+                swatch_font = ImageFont.load_default()
+                small_font = ImageFont.load_default()
+                tiny_font = ImageFont.load_default()
+        
+        # Header
+        title = "🎨 PaintingParser - Color Swatch Reference Sheet"
+        draw.text((margin, margin), title, fill='black', font=title_font)
+        
+        # Image info
+        info_text = f"Image: {results.get('scale_info', 'N/A')} | Colors: {len(color_data)} | Method: {results.get('approx_method', 'N/A')}"
+        draw.text((margin, margin + 60), info_text, fill='black', font=info_font)
+        
+        # Print date and settings
+        from datetime import datetime
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M")
+        settings_text = f"Generated: {timestamp} | Print at 300 DPI for actual size"
+        draw.text((margin, margin + 100), settings_text, fill='gray', font=small_font)
+        
+        # Total pixels for percentage calculations
+        total_pixels = results['processed_image'].size[0] * results['processed_image'].size[1]
+        pixels_text = f"Total Image Pixels: {total_pixels:,}"
+        draw.text((margin, margin + 130), pixels_text, fill='gray', font=small_font)
+        
+        # Add visualization if available
+        viz_end_x = margin
+        if has_visualization:
+            try:
+                viz_img = Image.open(BytesIO(results['files']['visualization']))
+                # Scale visualization to fit reserved space
+                viz_ratio = min(viz_width / viz_img.width, (content_height * 0.8) / viz_img.height)
+                viz_new_width = int(viz_img.width * viz_ratio)
+                viz_new_height = int(viz_img.height * viz_ratio)
+                viz_resized = viz_img.resize((viz_new_width, viz_new_height), Image.LANCZOS)
+                
+                # Position visualization
+                viz_x = margin
+                viz_y = content_start_y
+                img.paste(viz_resized, (viz_x, viz_y))
+                
+                # Add visualization label
+                viz_label = "Color Index Visualization"
+                draw.text((viz_x, viz_y - 25), viz_label, fill='black', font=small_font)
+                
+                viz_end_x = viz_x + viz_new_width + 30  # 30px gap
+                
+            except Exception as e:
+                # If visualization fails, just skip it
+                pass
+        
+        # Calculate swatch start position (after visualization if present)
+        swatch_start_x = viz_end_x
+        
+        # Color swatches
+        for i, color_entry in enumerate(color_data):
+            row = i // swatches_per_row
+            col = i % swatches_per_row
+            
+            # Calculate column position (starting after visualization)
+            column_x = swatch_start_x + col * (column_width + swatch_gap)
+            y = content_start_y + row * (swatch_height + swatch_gap)
+            
+            # Skip if we're running out of vertical space
+            if y + swatch_height > page_height - margin:
+                break
+            
+            # Extract RGB color
+            rgb_str = color_entry['RGB']  # format: "rgb(r,g,b)"
+            r, g, b = [int(x) for x in rgb_str[4:-1].split(',')]
+            
+            # Draw color square (centered in column)
+            square_x = column_x + (column_width - color_square_size) // 2
+            square_rect = [square_x, y, square_x + color_square_size, y + color_square_size]
+            draw.rectangle(square_rect, fill=(r, g, b), outline='black', width=2)
+            
+            # Text below square - also centered in column for visual alignment
+            text_start_x = column_x + (column_width - color_square_size) // 2  # Align with square
+            text_y = y + color_square_size + 8
+            line_height = 22  # More generous line spacing
+            
+            # Index and name (line 1) - larger, bold-looking
+            index_name = f"#{color_entry['Index']} {color_entry['Color Name'][:12]}"
+            draw.text((text_start_x, text_y), index_name, fill='black', font=swatch_font)
+            text_y += line_height + 3
+            
+            # CMYK percentages (line 2) - most important info, larger
+            cmyk_text = f"C{color_entry['C%']} M{color_entry['M%']} Y{color_entry['Y%']} K{color_entry['K%']}"
+            draw.text((text_start_x, text_y), cmyk_text, fill='black', font=small_font)
+            text_y += line_height
+            
+            # CMYK decimal values (line 3)
+            cmyk_decimal = f"({color_entry['C']}, {color_entry['M']}, {color_entry['Y']}, {color_entry['K']})"
+            draw.text((text_start_x, text_y), cmyk_decimal, fill='blue', font=tiny_font)
+            text_y += line_height - 2
+            
+            # RGB values (line 4)
+            rgb_text = f"RGB({r},{g},{b})"
+            draw.text((text_start_x, text_y), rgb_text, fill='gray', font=tiny_font)
+            text_y += line_height - 2
+            
+            # Pixel count and percentage (line 5)
+            pixel_count = color_entry['Count']
+            pixel_pct = (pixel_count / total_pixels) * 100
+            pixel_text = f"{pixel_count:,}px ({pixel_pct:.1f}%)"
+            draw.text((text_start_x, text_y), pixel_text, fill='darkgreen', font=small_font)
+            text_y += line_height - 2
+            
+            # Mixing parts if available (line 6)
+            if color_entry.get('CMYK Parts'):
+                parts_text = color_entry['CMYK Parts'][:15]  # Allow more characters
+                draw.text((text_start_x, text_y), parts_text, fill='purple', font=tiny_font)
+        
+        # Footer with printing instructions and legend
+        footer_y = page_height - margin - 80
+        footer_text = "Print Settings: 300 DPI, Actual Size, Color Mode. Compare small squares under your painting light."
+        draw.text((margin, footer_y), footer_text, fill='gray', font=small_font)
+        
+        # Legend
+        legend_y = footer_y + 25
+        legend_text = "Legend: Black=Index/Name & CMYK%, Blue=CMYK decimals, Gray=RGB, Green=Pixels, Purple=Mix ratios"
+        draw.text((margin, legend_y), legend_text, fill='gray', font=tiny_font)
+        
+    except ImportError:
+        # Fallback if PIL doesn't have ImageDraw/ImageFont
+        # Create a simpler version with just small color blocks
+        pixels = img.load()
+        
+        # Fill with small color swatches in a grid
+        for i, color_entry in enumerate(color_data):
+            if i >= swatches_per_row * 10:  # Limit to avoid too many swatches
+                break
+                
+            row = i // swatches_per_row
+            col = i % swatches_per_row
+            
+            x_start = margin + col * (column_width + swatch_gap) + (column_width - color_square_size) // 2
+            y_start = content_start_y + row * (swatch_height + swatch_gap)
+            
+            rgb_str = color_entry['RGB']
+            r, g, b = [int(x) for x in rgb_str[4:-1].split(',')]
+            
+            # Fill small color rectangle
+            for y in range(y_start, min(y_start + color_square_size, page_height)):
+                for x in range(x_start, min(x_start + color_square_size, page_width)):
+                    if 0 <= x < page_width and 0 <= y < page_height:
+                        pixels[x, y] = (r, g, b)
+    
+    return img
+
+def create_pdf_swatch_sheet(color_data, results, page_size="a4", swatches_per_row=8, square_size_inches=0.2, include_visualization=False):
+    """Create a PDF swatch sheet using ReportLab."""
+    try:
+        from reportlab.pdfgen import canvas
+        from reportlab.lib.pagesizes import letter, A4
+        from reportlab.lib.units import inch
+        from reportlab.lib.colors import Color
+        import io
+        
+        # Set up page dimensions
+        if page_size == "letter":
+            page_width, page_height = letter
+        else:  # A4
+            page_width, page_height = A4
+        
+        # Create PDF in memory
+        pdf_buffer = io.BytesIO()
+        c = canvas.Canvas(pdf_buffer, pagesize=(page_width, page_height))
+        
+        # Margins and layout
+        margin = 0.5 * inch
+        usable_width = page_width - (2 * margin)
+        usable_height = page_height - (2 * margin)
+        
+        # Header space
+        header_height = 1.4 * inch  # Increased for visualization
+        content_start_y = page_height - margin - header_height
+        
+        # Check if we have visualization to include
+        has_visualization = include_visualization and 'visualization' in results['files'] and results.get('visualization_type') == 'png'
+        
+        # Reserve space for visualization if available
+        viz_width = 0
+        if has_visualization:
+            viz_width = min(2.5 * inch, usable_width / 3)  # Use up to 1/3 of width
+            available_swatch_width = usable_width - viz_width - 0.2 * inch  # 0.2" gap
+        else:
+            available_swatch_width = usable_width
+        
+        # Calculate swatch layout with configurable square size
+        swatch_gap = 0.05 * inch
+        column_width = (available_swatch_width - (swatches_per_row - 1) * swatch_gap) / swatches_per_row
+        
+        # Use the specified square size in inches
+        color_square_size = square_size_inches * inch
+        
+        # Ensure square fits in column
+        if color_square_size > column_width * 0.8:
+            color_square_size = column_width * 0.8
+        
+        # Increased text area height for better spacing
+        text_area_height = 1.2 * inch  # Increased from 0.8"
+        swatch_height = color_square_size + text_area_height
+        
+        # Header
+        c.setFillColor(Color(0, 0, 0))  # Black text
+        c.setFont("Helvetica-Bold", 16)
+        c.drawString(margin, page_height - margin - 0.3 * inch, "🎨 PaintingParser - Color Swatch Reference Sheet")
+        
+        # Image info
+        c.setFont("Helvetica", 10)
+        info_text = f"Image: {results.get('scale_info', 'N/A')} | Colors: {len(color_data)} | Method: {results.get('approx_method', 'N/A')}"
+        c.drawString(margin, page_height - margin - 0.5 * inch, info_text)
+        
+        # Timestamp
+        from datetime import datetime
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M")
+        settings_text = f"Generated: {timestamp} | Print at actual size"
+        c.setFont("Helvetica", 8)
+        c.drawString(margin, page_height - margin - 0.7 * inch, settings_text)
+        
+        # Total pixels
+        total_pixels = results['processed_image'].size[0] * results['processed_image'].size[1]
+        pixels_text = f"Total Image Pixels: {total_pixels:,}"
+        c.drawString(margin, page_height - margin - 0.9 * inch, pixels_text)
+        
+        # Add visualization if available
+        viz_end_x = margin
+        if has_visualization:
+            try:
+                from reportlab.lib.utils import ImageReader
+                viz_img = Image.open(BytesIO(results['files']['visualization']))
+                
+                # Scale visualization to fit reserved space
+                viz_ratio = min(viz_width / viz_img.width, (content_start_y - margin - 1.0 * inch) / viz_img.height)
+                viz_new_width = viz_img.width * viz_ratio
+                viz_new_height = viz_img.height * viz_ratio
+                
+                # Position visualization
+                viz_x = margin
+                viz_y = content_start_y - viz_new_height
+                
+                # Draw visualization
+                c.drawImage(ImageReader(viz_img), viz_x, viz_y, viz_new_width, viz_new_height)
+                
+                # Add visualization label
+                c.setFillColor(Color(0, 0, 0))  # Black text
+                c.setFont("Helvetica-Bold", 8)
+                c.drawString(viz_x, viz_y + viz_new_height + 0.1 * inch, "Color Index Visualization")
+                
+                viz_end_x = viz_x + viz_new_width + 0.2 * inch  # 0.2" gap
+                
+            except Exception as e:
+                # If visualization fails, just skip it
+                pass
+        
+        # Color swatches
+        for i, color_entry in enumerate(color_data):
+            row = i // swatches_per_row
+            col = i % swatches_per_row
+            
+            # Calculate position (PDF coordinates are bottom-up)
+            x = viz_end_x + col * (column_width + swatch_gap)
+            y = content_start_y - row * (swatch_height + swatch_gap)
+            
+            # Skip if we're running out of vertical space
+            if y - swatch_height < margin:
+                break
+            
+            # Extract RGB color
+            rgb_str = color_entry['RGB']  # format: "rgb(r,g,b)"
+            r, g, b = [int(x) for x in rgb_str[4:-1].split(',')]
+            
+            # Draw color square (centered in column)
+            square_x = x + (column_width - color_square_size) / 2
+            square_y = y - color_square_size
+            
+            # Set fill color and draw rectangle
+            c.setFillColor(Color(r/255.0, g/255.0, b/255.0))
+            c.setStrokeColor(Color(0, 0, 0))  # Black border
+            c.setLineWidth(1)
+            c.rect(square_x, square_y, color_square_size, color_square_size, fill=1, stroke=1)
+            
+            # Text below square - all black text with proper spacing
+            text_x = x + (column_width - color_square_size) / 2
+            text_y = square_y - 0.15 * inch  # More space from square
+            line_height = 0.15 * inch  # Increased line spacing
+            
+            # All text is black
+            c.setFillColor(Color(0, 0, 0))
+            
+            # Index and name (line 1)
+            c.setFont("Helvetica-Bold", 9)  # Slightly larger
+            index_name = f"#{color_entry['Index']} {color_entry['Color Name'][:10]}"
+            c.drawString(text_x, text_y, index_name)
+            text_y -= line_height
+            
+            # CMYK percentages (line 2)
+            c.setFont("Helvetica-Bold", 8)
+            cmyk_text = f"C{color_entry['C%']} M{color_entry['M%']} Y{color_entry['Y%']} K{color_entry['K%']}"
+            c.drawString(text_x, text_y, cmyk_text)
+            text_y -= line_height
+            
+            # CMYK decimal values (line 3)
+            c.setFont("Helvetica", 7)
+            cmyk_decimal = f"({color_entry['C']}, {color_entry['M']}, {color_entry['Y']}, {color_entry['K']})"
+            c.drawString(text_x, text_y, cmyk_decimal)
+            text_y -= line_height
+            
+            # RGB values (line 4)
+            c.setFont("Helvetica", 7)
+            rgb_text = f"RGB({r},{g},{b})"
+            c.drawString(text_x, text_y, rgb_text)
+            text_y -= line_height
+            
+            # Pixel count and percentage (line 5)
+            c.setFont("Helvetica-Bold", 7)
+            pixel_count = color_entry['Count']
+            pixel_pct = (pixel_count / total_pixels) * 100
+            pixel_text = f"{pixel_count:,}px ({pixel_pct:.1f}%)"
+            c.drawString(text_x, text_y, pixel_text)
+            text_y -= line_height
+            
+            # Mixing parts if available (line 6)
+            if color_entry.get('CMYK Parts'):
+                c.setFont("Helvetica", 7)
+                parts_text = color_entry['CMYK Parts'][:12]  # Truncate to fit
+                c.drawString(text_x, text_y, parts_text)
+        
+        # Footer - all black text
+        c.setFillColor(Color(0, 0, 0))
+        c.setFont("Helvetica", 8)
+        footer_text = "Print Settings: Actual Size, Color Mode. Compare squares under your painting light."
+        c.drawString(margin, margin + 0.3 * inch, footer_text)
+        
+        # Legend
+        c.setFont("Helvetica", 7)
+        legend_text = "All values shown: Index/Name, CMYK percentages, CMYK decimals, RGB values, Pixel count, Mix ratios"
+        c.drawString(margin, margin + 0.1 * inch, legend_text)
+        
+        # Finalize PDF
+        c.save()
+        pdf_buffer.seek(0)
+        return pdf_buffer.getvalue()
+        
+    except ImportError:
+        # Fallback if ReportLab is not available
+        st.error("PDF generation requires the 'reportlab' library. Install with: pip install reportlab")
+        return None
+
 def main():
     st.set_page_config(page_title="PaintingParser - CMYK Color Analyzer", page_icon="🎨", layout="wide")
 
@@ -508,6 +945,7 @@ section.main > div.block-container {padding-top:1.2rem !important;}
                 # Emphasized CMYK-centric presentation
                 c_pct, m_pct, y_pct, k_pct = sel['C%'], sel['M%'], sel['Y%'], sel['K%']
                 usage_fraction = sel['Count'] / total_px
+                pixel_count = sel['Count']
                 st.markdown(
                     f"""
 <div class='pp-cmyk-wrap'>
@@ -530,7 +968,7 @@ section.main > div.block-container {padding-top:1.2rem !important;}
     <div><strong>RGB:</strong> {sel['RGB']}<br>
          <strong>CMYK (0-1):</strong> C {sel['C']}, M {sel['M']}, Y {sel['Y']}, K {sel['K']}<br>
          <strong>Parts (CMY):</strong> {sel['CMY Parts']}<br>
-         <strong>Usage Fraction:</strong> {usage_fraction:.2%}
+         <strong>Pixel Count:</strong> {pixel_count:,} pixels ({usage_fraction:.2%} of image)
     </div>
 </div>
 """,
@@ -549,8 +987,77 @@ section.main > div.block-container {padding-top:1.2rem !important;}
             btn_specs.append(("🖼️ Viz PNG", 'visualization', 'color_visualization.png', 'image/png'))
         if 'reconstructed' in results['files']:
             btn_specs.append(("🔄 Reconstructed", 'reconstructed', 'reconstructed_image.png', 'image/png'))
-        if results['files']:
-            btn_specs.append(("📦 All (ZIP)", None, 'painting_parser_results.zip', 'application/zip'))
+        
+        # Add print swatch sheet generation
+        print_col1, print_col2, print_col3, print_col4 = st.columns([1, 1, 1, 1])
+        with print_col1:
+            page_size = st.selectbox("Print Page Size", ["a4", "letter"], index=0, help="Choose paper size for swatch sheet")
+        with print_col2:
+            swatches_per_row = st.selectbox("Swatches Per Row", [4, 6, 8, 10, 12, 16], index=2, help="Number of color swatches per row")
+        with print_col3:
+            output_format = st.selectbox("Output Format", ["png", "pdf"], index=0, help="Choose PNG (image) or PDF format")
+        with print_col4:
+            square_size_inches = st.selectbox("Square Size", [0.15, 0.2, 0.25, 0.3, 0.35, 0.4], index=1, 
+                                            format_func=lambda x: f'{x}"', 
+                                            help="Size of color squares in inches")
+        
+        # Additional option for visualization inclusion
+        include_visualization = st.checkbox("Include visualization on print sheet", value=False, 
+                                          help="Add the color visualization to the printed swatch sheet (uses more space)")
+
+        if st.button("🖨️ Generate Print Swatch Sheet", help="Create a printable sheet with all color swatches for physical comparison"):
+            with st.spinner("Generating print swatch sheet..."):
+                try:
+                    if output_format == "pdf":
+                        swatch_data = create_print_swatch_sheet(color_data, results, page_size, swatches_per_row, "pdf", square_size_inches, include_visualization)
+                        if swatch_data is not None:
+                            # Add to files for ZIP download
+                            results['files']['print_swatches_pdf'] = swatch_data
+                            
+                            # Open PDF in new tab instead of downloading
+                            pdf_b64 = base64.b64encode(swatch_data).decode('utf-8')
+                            pdf_data_url = f"data:application/pdf;base64,{pdf_b64}"
+                            
+                            # JavaScript to open PDF in new tab
+                            st.markdown(f"""
+                            <script>
+                            window.open('{pdf_data_url}', '_blank');
+                            </script>
+                            """, unsafe_allow_html=True)
+                            
+                            # Show success message
+                            st.success("✅ PDF swatch sheet generated and opened in new tab!")
+                            st.info("💡 If the PDF didn't open, please allow popups for this site. You can also download it below.")
+                            
+                            # Clear ZIP cache since we added a new file
+                            st.session_state.pop('pp_cached_zip', None)
+                    else:
+                        swatch_sheet = create_print_swatch_sheet(color_data, results, page_size, swatches_per_row, "png", square_size_inches, include_visualization)
+                        
+                        # Convert to bytes for download
+                        img_buffer = BytesIO()
+                        swatch_sheet.save(img_buffer, format='PNG', dpi=(300, 300))
+                        swatch_bytes = img_buffer.getvalue()
+                        
+                        # Add to files for ZIP download
+                        results['files']['print_swatches'] = swatch_bytes
+                        
+                        # Show preview
+                        viz_note = " (with viz)" if include_visualization else ""
+                        st.image(swatch_sheet, caption=f"Print Swatch Sheet ({page_size.upper()}, {swatches_per_row} per row, {square_size_inches}\" squares{viz_note})", width=400)
+                        st.success("✅ PNG swatch sheet generated! Available in downloads below.")
+                        
+                        # Clear ZIP cache since we added a new file
+                        st.session_state.pop('pp_cached_zip', None)
+                    
+                except Exception as e:
+                    st.error(f"Error generating swatch sheet: {e}")
+
+        # Add print swatch files to download buttons if they exist
+        if 'print_swatches' in results['files']:
+            btn_specs.append(("🖨️ Print PNG", 'print_swatches', 'color_swatches_print.png', 'image/png'))
+        if 'print_swatches_pdf' in results['files']:
+            btn_specs.append(("📄 Print PDF", 'print_swatches_pdf', 'color_swatches_print.pdf', 'application/pdf'))
 
         # Create custom inline download buttons (anchors) without spacing
         html_parts = [
